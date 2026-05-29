@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CFjPhJqf.js";import{a as t}from"./message-bus-7kGnFY_-.js";import{Gn as n,Sr as r,Yn as i,xr as a}from"./vscode-api-Bi7RdfNd.js";import{n as o}from"./app-server-manager-signals-B0KoLTWE.js";import{t as s}from"./sortBy-DhQP0a7Q.js";var c=t(),l=e(s(),1),u=r(n,e=>a(n,({get:t})=>Object.fromEntries(e.map(e=>[e,t(t(o,e))]))));function d(e){let t=(0,c.c)(2),n;return t[0]===e?n=t[1]:(n=(0,l.default)(e.map(f)),t[0]=e,t[1]=n),i(u,n)}function f(e){let{hostId:t}=e;return t}export{d as t};
+//# sourceMappingURL=use-remote-connection-states-CK7pBeXS.js.map

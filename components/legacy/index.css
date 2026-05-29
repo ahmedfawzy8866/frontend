@@ -1,0 +1,132 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    user-select: none;
+    background: #f4f6f9;
+    right: 0px;
+    top: 0px;
+    opacity: 1;
+    transition: opacity 0.3s linear 0s;
+    width: 290px;
+    display: block;
+    border-radius: 10px;
+    margin: 0;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+.title {
+    font-family: 'ProximaNova', 'Roboto', sans-serif;
+    display: inline-block;
+    line-height: 32px;
+    height: 32px;
+    vertical-align: middle;
+    font-size: 1rem;
+    margin: 0px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #000000de;
+    box-sizing: inherit;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 1.063rem;
+    line-height: 1.563rem;
+}
+.header {
+    box-sizing: border-box;
+    padding: 8px 0px;
+    background: #fff;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+}
+.header img {
+    margin: 0px;
+    padding: 0px;
+    width: 102px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.bodyContent {
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: rgb(34, 34, 34);
+}
+.input-container {
+    cursor: pointer;
+    margin-right: 12px;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+    background: transparent;
+}
+.card {
+    box-shadow: 6px 6px 8px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 16px 12px 8px;
+    cursor: pointer;
+}
+.card:first-of-type {
+    margin-bottom: 16px;
+}
+.card:hover {
+    box-shadow: 3px 3px 12px 0px rgb(0 0 0 / 14%);
+}
+.cardContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #F0F0F0;
+    padding-bottom: 2px;
+}
+.cardContent img {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    margin-bottom: 8px;
+}
+.cardDescription {
+    margin-right: 0;
+}
+.cardTitle {
+    font-family: "ProximaNova", "Helvetica", "Arial", sans-serif;
+    font-size: 0.813rem;
+    line-height: 1.438rem;
+    font-weight: 700;
+    margin: 0;
+    color: #000000de;
+}
+.cardText {
+    color: #565a5e;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    line-height: 1.313rem;
+    font-weight: 400;
+}
+.cardFooter {
+    padding: 8px;
+    padding-bottom: 0px;
+}
+.actionText {
+    text-align: right;
+    font-size: 0.813rem;
+    letter-spacing: 0.01071em;
+    line-height: 1.438rem;
+    font-weight: 400;
+    font-family: 'ProximaNova', 'Roboto', sans-serif;
+    color: #2962ff;
+    margin: 0;
+}
+.actionText:hover {
+    color: #003de6;
+}
+main {
+    padding: 16px 16px 24px;
+}

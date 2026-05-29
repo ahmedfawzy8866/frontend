@@ -1,0 +1,4 @@
+"use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4852ba4a-cb2f-5484-a21b-8ba3f288efe8")}catch(e){}}();
+(self.webpackChunkbardeen_browser_extension=self.webpackChunkbardeen_browser_extension||[]).push([[7351],{77351:(e,t,n)=>{n.r(t),n.d(t,{default:()=>i});var a=n(54357),r=n(14041),o=n(81);let s=(0,o.n9)({nag:{position:"fixed",top:"2rem",right:"1rem",zIndex:2147483e3}}),i=e=>{let{api:t,playbook:n}=e,[i,l]=r.useState(!1),u=s();if(i)return null;let c=async e=>{l(!0)},b=async e=>{await c("run"),await t.contextualNotificationActivateSynthesizedPlaybook(e)};return r.createElement("div",{className:(0,a.A)(u.nag)},r.createElement(o.Su,{onRun:b,onClose:c,playbook:n}))}}}]);
+//# debugId=4852ba4a-cb2f-5484-a21b-8ba3f288efe8

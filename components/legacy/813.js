@@ -1,0 +1,4 @@
+"use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="9304981b-2be3-5ad1-9fbc-8dd3666a0ccc")}catch(e){}}();
+(self.webpackChunkbardeen_browser_extension=self.webpackChunkbardeen_browser_extension||[]).push([[813],{90813:(e,t,s)=>{s.r(t),s.d(t,{default:()=>r});var a=s(14041),n=s(81);let r=e=>{let{api:t,controller:s}=e,[r,o]=a.useState(!1),[u,c]=a.useState({actions:[]});return a.useEffect(()=>{(async()=>{o(await t.systemCheckFeature("dev_tools"))})();let e=async e=>{c(e)};return s.on("setState",e),()=>{s.off("setState",e)}},[t,s]),a.createElement(n.$u.C,{api:t,host:s,devTools:r,...u})}}}]);
+//# debugId=9304981b-2be3-5ad1-9fbc-8dd3666a0ccc

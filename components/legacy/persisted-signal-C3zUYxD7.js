@@ -1,0 +1,2 @@
+import{Gn as e,Sr as t,Tr as n}from"./vscode-api-Bi7RdfNd.js";function r(t,n){return l({initialValue:n,key:t}),{cache:`signal`,resolve(e,n){return s.resolve(e,n,t).value$.atom},scope:e}}var i=new Map,a=new Set,o=n(e,[]),s=t(e,(e,{signal:t})=>({key:e,value$:t(void 0)}));function c(e){return a.add(e),e(Array.from(i.values())),()=>{a.delete(e)}}function l(e){if(i.has(e.key))return;i.set(e.key,e);let t=Array.from(i.values());a.forEach(e=>e(t))}export{c as i,o as n,s as r,r as t};
+//# sourceMappingURL=persisted-signal-C3zUYxD7.js.map

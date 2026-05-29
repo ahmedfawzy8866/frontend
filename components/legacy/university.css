@@ -1,0 +1,54 @@
+body {
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+  background-color: var(--codeium-chat-background);
+  height: 100%;
+  width: 100%;
+}
+
+/******************** Panel Layout Styles ********************/
+.react-app-container {
+  width: 100%;
+  height: 100%;
+}
+
+/******************** VS Code Theme Setup ********************/
+:root {
+  --codeium-chat-background: var(--vscode-sideBar-background);
+  --codeium-editor-background: var(--vscode-editor-background);
+  --codeium-editor-color: var(--vscode-editor-foreground);
+  --codeium-text-color: var(--vscode-foreground);
+  --codeium-link-color: var(--vscode-textLink-foreground);
+  --codeium-link-hover-color: var(--vscode-textLink-activeForeground);
+  --codeium-caption-color: rgb(180, 180, 180);
+  --codeium-message-block-user-background: var(
+    --vscode-list-activeSelectionBackground
+  );
+  --codeium-message-block-user-color: var(
+    --vscode-list-activeSelectionForeground
+  );
+  --codeium-message-block-bot-background: var(
+    --vscode-list-inactiveSelectionBackground
+  );
+  --codeium-message-block-bot-color: var(--vscode-foreground);
+  --codeium-input-color: var(--vscode-input-foreground);
+  --codeium-input-placeholder: var(--vscode-input-placeholderForeground);
+  --codeium-input-background: var(--vscode-input-background);
+  --codeium-tooltip-background: var(--vscode-list-inactiveSelectionBackground);
+  --codeium-tooltip-color: var(--vscode-foreground);
+  --codeium-active-selection-background: var(
+    --vscode-list-activeSelectionBackground
+  );
+  --codeium-active-selection-color: var(
+    --vscode-list-activeSelectionForeground
+  );
+  --codeium-badge-background: var(--vscode-badge-background);
+  --codeium-badge-color: var(--vscode-badge-foreground);
+  --codeium-editor-line-number-color: var(
+    --vscode-editorLineNumber-activeForeground
+  );
+}

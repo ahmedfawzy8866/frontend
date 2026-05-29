@@ -1,0 +1,33 @@
+import {
+  MessageCircle,
+  Ruler,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Users,
+  Wallet,
+  X,
+  Phone,
+  Mail,
+  Globe,
+  Award,
+  Star,
+} from "lucide-react";
+
+export const Icons = [
+  MessageCircle,
+  Ruler,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Users,
+  Wallet,
+  X,
+  Phone,
+  Mail,
+  Globe,
+  Award,
+  Star,
+];

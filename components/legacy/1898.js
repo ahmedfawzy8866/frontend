@@ -1,0 +1,4 @@
+"use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="43d183ad-9e16-53bb-849d-60308d2ddf7e")}catch(e){}}();
+(self.webpackChunkbardeen_browser_extension=self.webpackChunkbardeen_browser_extension||[]).push([[1898],{11898:(e,t,r)=>{r.r(t),r.d(t,{default:()=>l});var n=r(14041),a=r(81);let l=e=>{let{divRef:t,coordsDebugger:r,...l}=(0,a.KB)(e.controller),{controller:s,api:i,storage:o,version:d,...b}=e;return n.createElement(a.M5.Provider,{value:l},n.createElement("div",{ref:t,style:{position:"fixed",inset:0},"data-testid":"browser-agent-builder"},n.createElement(a.hj,{controller:s,state:b,api:i})),r)}}}]);
+//# debugId=43d183ad-9e16-53bb-849d-60308d2ddf7e

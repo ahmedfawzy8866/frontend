@@ -1,0 +1,550 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.languageServerManager = exports.LanguageServerManager = exports.LANGUAGE_SERVER_NAME = void 0;
+const node_1 = require("vscode-languageclient/node");
+const vscode = require("vscode");
+const path = require("path");
+const vscode_1 = require("vscode");
+const brighterscript_1 = require("brighterscript");
+const logger_1 = require("@rokucommunity/logger");
+const brighterscript_2 = require("brighterscript");
+const BrightScriptDefinitionProvider_1 = require("./BrightScriptDefinitionProvider");
+const SymbolInformationRepository_1 = require("./SymbolInformationRepository");
+const BrightScriptDocumentSymbolProvider_1 = require("./BrightScriptDocumentSymbolProvider");
+const BrightScriptReferenceProvider_1 = require("./BrightScriptReferenceProvider");
+const BrightScriptSignatureHelpProvider_1 = require("./BrightScriptSignatureHelpProvider");
+const util_1 = require("./util");
+const LanguageServerInfoCommand_1 = require("./commands/LanguageServerInfoCommand");
+const fsExtra = require("fs-extra");
+const eventemitter3_1 = require("eventemitter3");
+const dayjs = require("dayjs");
+const thenby_1 = require("thenby");
+/**
+ * Tracks the running/stopped state of the language server. When the lsp crashes, vscode will restart it. After the 5th crash, they'll leave it permanently crashed.
+ * There seems to be no time limit on adding up to the 5, so even after a few days, vscode may still terminate the language server.
+ * This class track when the language server is stopped and then not started back up again after a period of time.
+ * For example, 20 seconds after after the final failure, this event fires so that we can show a "wanna restart it" popup.
+ */
+class LspRunTracker {
+    constructor(debounceDelay) {
+        this.debounceDelay = debounceDelay;
+        this.emitter = new eventemitter3_1.EventEmitter();
+    }
+    setState(state) {
+        //if language server is running, clear any timers
+        if (state === node_1.State.Starting || state === node_1.State.Running) {
+            clearTimeout(this.timeoutHandle);
+        }
+        else {
+            this.timeoutHandle = setTimeout(() => {
+                clearTimeout(this.timeoutHandle);
+                this.emitter.emit('stopped');
+            }, this.debounceDelay);
+        }
+    }
+    on(event, listener) {
+        this.emitter.on(event, listener);
+        return () => {
+            this.emitter.off(event, listener);
+        };
+    }
+}
+exports.LANGUAGE_SERVER_NAME = 'BrighterScript Language Server';
+class LanguageServerManager {
+    constructor() {
+        /**
+         * The delay after init before we delete any outdated bsc versions
+         */
+        this.outdatedBscVersionDeleteDelay = 5 * 60 * 1000;
+        this.lspRunTracker = new LspRunTracker(20000);
+        /**
+         * How many milliseconds to wait before showing a warning about the LSP being busy for too long
+         */
+        this.busyStatusWarningThreshold = 60000;
+        this.simpleSubscriptions = [];
+        this.deferred = new brighterscript_2.Deferred();
+        const brighterscriptDir = require.resolve('brighterscript').replace(/[\\\/]dist[\\\/]index.js/i, '');
+        const version = fsExtra.readJsonSync(`${brighterscriptDir}/package.json`).version;
+        this.embeddedBscInfo = {
+            packageDir: brighterscriptDir,
+            versionInfo: version,
+            version: version
+        };
+        //default to the embedded bsc version
+        this.selectedBscInfo = this.embeddedBscInfo;
+    }
+    get declarationProvider() {
+        return this.definitionRepository.provider;
+    }
+    async init(context, definitionRepository, localPackageManager) {
+        this.context = context;
+        this.definitionRepository = definitionRepository;
+        this.localPackageManager = localPackageManager;
+        //anytime the window changes focus, save the current brighterscript version
+        vscode.window.onDidChangeWindowState(async (e) => {
+            await this.localPackageManager.setUsage('brighterscript', this.selectedBscInfo.versionInfo);
+        });
+        //in about 5 minutes, clean up any outdated bsc versions (delayed to prevent slower startup times)
+        setTimeout(() => {
+            void this.deleteOutdatedBscVersions();
+        }, this.outdatedBscVersionDeleteDelay);
+        //if the lsp is permanently stopped by vscode, ask the user if they want to restart it again.
+        this.lspRunTracker.on('stopped', async () => {
+            //stop the statusbar spinner
+            this.updateStatusbar(false);
+            if (this.isLanguageServerEnabledInSettings()) {
+                const response = await vscode.window.showErrorMessage('The BrighterScript language server unexpectedly shut down. Do you want to restart it?', {
+                    modal: true
+                }, { title: 'Yes' }, { title: 'No ', isCloseAffordance: true });
+                if (response.title === 'Yes') {
+                    await this.restart();
+                }
+            }
+            else {
+                await this.disableLanguageServer();
+            }
+        });
+        //dynamically enable or disable the language server based on user settings
+        vscode.workspace.onDidChangeConfiguration(async (configuration) => {
+            //if we've changed the bsdk setting, restart the language server
+            if (configuration.affectsConfiguration('brightscript.bsdk')) {
+                await this.syncVersionAndTryRun();
+            }
+            //if the language server enable setting changed, restart the language server
+            if (configuration.affectsConfiguration('brightscript.enableLanguageServer') ||
+                configuration.affectsConfiguration('brightscript.languageServer.enabled')) {
+                await this.syncVersionAndTryRun();
+            }
+        });
+        await this.syncVersionAndTryRun();
+    }
+    /**
+     * Returns a promise that resolves once the language server is ready to be interacted with
+     */
+    async ready() {
+        if (this.isLanguageServerEnabledInSettings() === false) {
+            throw new Error('Language server is disabled in user settings');
+        }
+        else {
+            return this.deferred.promise;
+        }
+    }
+    refreshDeferred() {
+        let newDeferred = new brighterscript_2.Deferred();
+        //chain any pending promises to this new deferred
+        if (!this.deferred.isCompleted) {
+            this.deferred.resolve(newDeferred.promise);
+        }
+        this.deferred = newDeferred;
+    }
+    /**
+     * Create a new LanguageClient instance
+     * @returns
+     */
+    constructLanguageClient() {
+        // The server is implemented in node
+        let serverModule = this.context.asAbsolutePath(path.join('dist', 'LanguageServerRunner.js'));
+        //give the runner the specific version of bsc to run
+        const args = [
+            this.selectedBscInfo.packageDir,
+            (this.context.extensionMode === vscode.ExtensionMode.Development).toString()
+        ];
+        // If the extension is launched in debug mode then the debug server options are used
+        // Otherwise the run options are used
+        let serverOptions = {
+            run: {
+                module: serverModule,
+                transport: node_1.TransportKind.ipc,
+                args: args
+            },
+            debug: {
+                module: serverModule,
+                transport: node_1.TransportKind.ipc,
+                args: args,
+                // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
+                options: { execArgv: ['--nolazy', '--inspect=6009'] }
+            }
+        };
+        // Options to control the language client
+        let clientOptions = {
+            // Register the server for various types of documents
+            documentSelector: [
+                { scheme: 'file', language: 'brightscript' },
+                { scheme: 'file', language: 'brighterscript' },
+                { scheme: 'file', language: 'xml' }
+            ],
+            synchronize: {
+                // Notify the server about file changes to every filetype it cares about
+                fileEvents: vscode_1.workspace.createFileSystemWatcher('**/*')
+            }
+        };
+        // Create the language client and start the client.
+        return new node_1.LanguageClient('brighterScriptLanguageServer', exports.LANGUAGE_SERVER_NAME, serverOptions, clientOptions);
+    }
+    async enableLanguageServer() {
+        var _a, _b, _c;
+        try {
+            //if we already have a language server, nothing more needs to be done
+            if (this.client) {
+                return await this.ready();
+            }
+            this.refreshDeferred();
+            //create the statusbar item
+            this.statusbarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+            this.statusbarItem.command = LanguageServerInfoCommand_1.LanguageServerInfoCommand.commandName;
+            //enable the statusbar loading anmation. the language server will disable once it finishes loading
+            this.updateStatusbar(false);
+            this.statusbarItem.show();
+            //disable the simple providers (the language server will handle all of these)
+            this.disableSimpleProviders();
+            this.client = this.constructLanguageClient();
+            this.client.onDidChangeState((event) => {
+                console.log(new Date().toLocaleTimeString(), 'onDidChangeState', node_1.State[event.newState]);
+                this.lspRunTracker.setState(event.newState);
+            });
+            // Start the client. This will also launch the server
+            this.clientDispose = this.client.start();
+            await this.client.onReady();
+            this.client.onNotification('critical-failure', (message) => {
+                void vscode_1.window.showErrorMessage(message);
+            });
+            this.registerBusyStatusHandler();
+            this.deferred.resolve(true);
+        }
+        catch (e) {
+            //stop the client by any means necessary
+            try {
+                void ((_b = (_a = this.client) === null || _a === void 0 ? void 0 : _a.stop) === null || _b === void 0 ? void 0 : _b.call(_a));
+            }
+            catch (_d) { }
+            delete this.client;
+            this.refreshDeferred();
+            (_c = this.deferred) === null || _c === void 0 ? void 0 : _c.reject(e);
+            throw e;
+        }
+        return this.ready();
+    }
+    registerBusyStatusHandler() {
+        let timeoutHandle;
+        const logger = new logger_1.Logger();
+        this.client.onNotification(brighterscript_1.NotificationName.busyStatus, (event) => {
+            this.updateStatusbar(event.status === brighterscript_1.BusyStatus.busy, event.activeRuns);
+            //clear any existing timeout
+            if (timeoutHandle) {
+                clearTimeout(timeoutHandle);
+            }
+            //if the busy status takes too long, write a lsp log entry with details of what's still pending
+            if (event.status === brighterscript_1.BusyStatus.busy) {
+                timeoutHandle = setTimeout(() => {
+                    const delay = Date.now() - event.timestamp;
+                    this.client.outputChannel.appendLine(`${logger.formatTimestamp(new Date())} language server has been 'busy' for ${delay}ms. most recent busyStatus event: ${JSON.stringify(event, undefined, 4)}`);
+                }, this.busyStatusWarningThreshold);
+            }
+        });
+    }
+    /**
+     * Enable/disable the loading spinner on the statusbar item
+     */
+    updateStatusbar(isLoading, activeRuns) {
+        //do nothing if we don't have a statusbar
+        if (!this.statusbarItem) {
+            return;
+        }
+        const icon = isLoading ? '$(sync~spin)' : '$(flame)';
+        this.statusbarItem.text = `${icon} bsc-${this.selectedBscInfo.version}`;
+        let tooltip = `BrightScript Language Server: ${isLoading ? 'working' : 'idle'}`;
+        //print any acdtive runs so devs know what is taking so long
+        if ((activeRuns === null || activeRuns === void 0 ? void 0 : activeRuns.length) > 0) {
+            tooltip += '\n' + this.getActiveRunsTooltipText(activeRuns);
+        }
+        this.statusbarItem.tooltip = tooltip;
+    }
+    getActiveRunsTooltipText(activeRuns) {
+        var _a, _b;
+        let tooltip = '';
+        //sort the runs so they're more consistent
+        const groups = (_a = activeRuns === null || activeRuns === void 0 ? void 0 : activeRuns.sort) === null || _a === void 0 ? void 0 : _a.call(activeRuns, (0, thenby_1.firstBy)('scope').thenBy('label').thenBy('startTime')).reduce((groups, item) => {
+            if (!groups.has(item.scope)) {
+                groups.set(item.scope, []);
+            }
+            groups.get(item.scope).push(item);
+            return groups;
+        }, new Map());
+        for (let [groupName, runsForGroup] of groups !== null && groups !== void 0 ? groups : []) {
+            if (!groupName || (groupName === null || groupName === void 0 ? void 0 : groupName.trim()) === 'undefined') {
+                groupName = 'general';
+            }
+            if (groupName) {
+                tooltip += `\n${groupName}:`;
+            }
+            for (const run of runsForGroup !== null && runsForGroup !== void 0 ? runsForGroup : []) {
+                let line = '\n\t';
+                line += `${run.label} (since ${(_b = new Date(run.startTime)) === null || _b === void 0 ? void 0 : _b.toLocaleTimeString()})`;
+                tooltip += line;
+            }
+        }
+        return tooltip;
+    }
+    /**
+     * Stop and then start the language server.
+     * This is a noop if the language server is currently disabled
+     */
+    async restart() {
+        await this.disableLanguageServer();
+        await util_1.util.delay(1);
+        await this.syncVersionAndTryRun();
+    }
+    async disableLanguageServer() {
+        var _a;
+        if (this.client) {
+            await this.client.stop();
+            this.statusbarItem.dispose();
+            this.statusbarItem = undefined;
+            (_a = this.clientDispose) === null || _a === void 0 ? void 0 : _a.dispose();
+            this.client = undefined;
+            //delay slightly to let things catch up
+            await util_1.util.delay(100);
+            this.deferred = new brighterscript_2.Deferred();
+        }
+        //enable the simple providers (since there is no language server)
+        this.enableSimpleProviders();
+    }
+    /**
+     * Enable the simple providers (which means the language server is disabled).
+     * These were the original providers created by George. Most of this functionality has been moved into the language server
+     * However, if the language server is disabled, we want to at least fall back to these.
+     */
+    enableSimpleProviders() {
+        if (this.simpleSubscriptions.length === 0) {
+            //register the definition provider
+            const definitionProvider = new BrightScriptDefinitionProvider_1.default(this.definitionRepository);
+            const symbolInformationRepository = new SymbolInformationRepository_1.SymbolInformationRepository(this.declarationProvider);
+            const selector = { scheme: 'file', pattern: '**/*.{brs,bs}' };
+            this.simpleSubscriptions.push(vscode.languages.registerDefinitionProvider(selector, definitionProvider), vscode.languages.registerDocumentSymbolProvider(selector, new BrightScriptDocumentSymbolProvider_1.BrightScriptDocumentSymbolProvider(this.declarationProvider)), vscode.languages.registerWorkspaceSymbolProvider(new SymbolInformationRepository_1.BrightScriptWorkspaceSymbolProvider(symbolInformationRepository)), vscode.languages.registerReferenceProvider(selector, new BrightScriptReferenceProvider_1.BrightScriptReferenceProvider()), vscode.languages.registerSignatureHelpProvider(selector, new BrightScriptSignatureHelpProvider_1.default(this.definitionRepository), '(', ','));
+            this.context.subscriptions.push(...this.simpleSubscriptions);
+        }
+    }
+    /**
+     * Disable the simple subscriptions (which means we'll depend on the language server)
+     */
+    disableSimpleProviders() {
+        if (this.simpleSubscriptions.length > 0) {
+            for (const sub of this.simpleSubscriptions) {
+                const idx = this.context.subscriptions.indexOf(sub);
+                if (idx > -1) {
+                    this.context.subscriptions.splice(idx, 1);
+                    sub.dispose();
+                }
+            }
+            this.simpleSubscriptions = [];
+        }
+    }
+    isLanguageServerEnabledInSettings() {
+        var _a;
+        const result = (_a = util_1.util.getConfigurationValueIfDefined('brightscript.languageServer.enabled')) !== null && _a !== void 0 ? _a : util_1.util.getConfigurationValueIfDefined('brightscript.enableLanguageServer', true);
+        return result;
+    }
+    async getTranspiledFileContents(pathAbsolute) {
+        //wait for the language server to be ready
+        await this.ready();
+        let result = await this.client.sendRequest('workspace/executeCommand', {
+            command: brighterscript_2.CustomCommands.TranspileFile,
+            arguments: [pathAbsolute]
+        });
+        return result;
+    }
+    /**
+     * Check user settings for which language server version to use,
+     * and if different, re-launch the specific version of the language server'
+     */
+    async syncVersionAndTryRun() {
+        const versionInfo = await this.getBsdkVersionInfo();
+        //if the path to bsc is different, spin down the old server and start a new one
+        if (versionInfo !== this.selectedBscInfo.packageDir) {
+            await this.disableLanguageServer();
+        }
+        //ensure the version of the language server is installed and available
+        //try to load the package version.
+        try {
+            this.selectedBscInfo = await this.ensureBscVersionInstalled(versionInfo);
+        }
+        catch (e) {
+            console.error(e);
+            //fall back to the embedded version, and show a popup (don't await the popup because that blocks this flow)
+            void vscode.window.showErrorMessage(`Language server failure. Did you forget \`npm install\`? Using embedded version ${this.embeddedBscInfo.version}. Can't find language server for "${versionInfo}"`);
+            this.selectedBscInfo = this.embeddedBscInfo;
+        }
+        if (this.isLanguageServerEnabledInSettings()) {
+            await this.enableLanguageServer();
+        }
+        else {
+            await this.disableLanguageServer();
+        }
+    }
+    parseVersionInfo(versionInfo, cwd = process.cwd()) {
+        if (versionInfo === 'embedded') {
+            return {
+                type: 'dir',
+                value: (0, brighterscript_1.standardizePath) `${this.embeddedBscInfo.packageDir}`
+            };
+        }
+        else {
+            return this.localPackageManager.parseVersionInfo(versionInfo, cwd);
+        }
+    }
+    /**
+     * Get the value for `brightscript.bsdk` from the following locations (in order). First one found wins:
+     * - use `brightscript.bsdk` value from the current `.code-workspace` file
+     * - if there is only 1 workspaceFolder with a `brightscript.bsdk` value, use that.
+     * - if there are multiple workspace folders with `brightscript.bsdk` values, prompt the user to pick which one to use
+     * - if there are no `brightscript.bsdk` values, use the embedded version
+     * @returns an absolute path to a directory for the bsdk, or the non-path value (i.e. a URL or a version number)
+     */
+    async getBsdkVersionInfo() {
+        var _a, _b, _c, _d;
+        //use bsdk entry in the code-workspace file
+        if (this.workspaceConfigIncludesBsdkKey()) {
+            let result = this.parseVersionInfo((_b = (_a = vscode.workspace.getConfiguration('brightscript', vscode.workspace.workspaceFile).get('bsdk')) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a), path.dirname(vscode.workspace.workspaceFile.fsPath));
+            if (result) {
+                return result.value;
+            }
+        }
+        //collect `brightscript.bsdk` setting value from each workspaceFolder
+        const folderResults = (_d = (_c = vscode.workspace.workspaceFolders) === null || _c === void 0 ? void 0 : _c.reduce((acc, workspaceFolder) => {
+            const versionInfo = vscode.workspace.getConfiguration('brightscript', workspaceFolder).get('bsdk');
+            const parsed = this.parseVersionInfo(versionInfo, workspaceFolder.uri.fsPath);
+            if (parsed) {
+                acc.set(parsed.value, parsed);
+            }
+            return acc;
+        }, new Map())) !== null && _d !== void 0 ? _d : new Map();
+        //no results found, use the embedded version
+        if (folderResults.size === 0) {
+            return this.embeddedBscInfo.packageDir;
+            //we have exactly one result. use it
+        }
+        else if (folderResults.size === 1) {
+            return [...folderResults.values()][0].value;
+            //there were multiple versions. make the user pick which to use
+        }
+        else {
+            //TODO should we prompt for just these items?
+            return LanguageServerInfoCommand_1.languageServerInfoCommand.selectBrighterScriptVersion();
+        }
+    }
+    workspaceConfigIncludesBsdkKey() {
+        return vscode.workspace.workspaceFile &&
+            fsExtra.pathExistsSync(vscode.workspace.workspaceFile.fsPath) &&
+            /"brightscript.bsdk"/.exec(fsExtra.readFileSync(vscode.workspace.workspaceFile.fsPath).toString());
+    }
+    /**
+     * Ensure that the specified bsc version is installed in the global storage directory.
+     * @param version
+     * @param retryCount the number of times we should retry before giving up
+     * @returns full path to the root of where the brighterscript module is installed
+     */
+    async ensureBscVersionInstalled(versionInfo, retryCount = 1, showProgress = true) {
+        var _a, _b;
+        const parsed = this.parseVersionInfo(versionInfo);
+        //if this is a directory, use it as-is
+        if (parsed.type === 'dir') {
+            //if the directory does not exist, throw an error
+            if (await fsExtra.pathExists((0, brighterscript_1.standardizePath) `${parsed.value}/package.json`) === false) {
+                throw new Error(`"${parsed.value}" does not contain a package.json file`);
+            }
+            return {
+                packageDir: (0, brighterscript_1.standardizePath) `${parsed.value}`,
+                version: (_b = (_a = fsExtra.readJsonSync((0, brighterscript_1.standardizePath) `${parsed.value}/package.json`, { throws: false })) === null || _a === void 0 ? void 0 : _a.version) !== null && _b !== void 0 ? _b : parsed.value,
+                versionInfo: versionInfo
+            };
+        }
+        //install this version of brighterscript
+        try {
+            const packageInfo = await util_1.util.runWithProgress({
+                title: 'Installing brighterscript language server ' + versionInfo,
+                location: vscode.ProgressLocation.Notification,
+                cancellable: false,
+                //show a progress spinner if configured to do so
+                showProgress: showProgress && !this.localPackageManager.isInstalled('brighterscript', versionInfo)
+            }, async () => {
+                return this.localPackageManager.install('brighterscript', versionInfo);
+            });
+            return {
+                packageDir: packageInfo.packageDir,
+                version: packageInfo.version,
+                versionInfo: versionInfo
+            };
+        }
+        catch (e) {
+            if (retryCount > 0) {
+                console.error('Failed to install brighterscript', versionInfo, e);
+                //if the install failed for some reason, uninstall the package and try again
+                await this.localPackageManager.uninstall('brighterscript', versionInfo);
+                return await this.ensureBscVersionInstalled(versionInfo, retryCount - 1, showProgress);
+            }
+            else {
+                throw e;
+            }
+        }
+    }
+    /**
+     * Delete any brighterscript versions that haven't been used in a while
+     */
+    async deleteOutdatedBscVersions() {
+        var _a, _b, _c;
+        const npmCacheRetentionDays = (_c = (_b = (_a = vscode.workspace.getConfiguration('brightscript')) === null || _a === void 0 ? void 0 : _a.get) === null || _b === void 0 ? void 0 : _b.call(_a, 'npmCacheRetentionDays', 45)) !== null && _c !== void 0 ? _c : 45;
+        //build the cutoff date (i.e. 45 days ago)
+        const cutoffDate = dayjs().subtract(npmCacheRetentionDays, 'days');
+        await this.localPackageManager.deletePackagesNotUsedSince(cutoffDate.toDate());
+    }
+}
+__decorate([
+    OneAtATime({ timeout: 3 * 60 * 1000 }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], LanguageServerManager.prototype, "ensureBscVersionInstalled", null);
+exports.LanguageServerManager = LanguageServerManager;
+exports.languageServerManager = new LanguageServerManager();
+/**
+ * Force method calls to run one-at-a-time, waiting for the completion of the previous call before running the next.
+ */
+function OneAtATime(options) {
+    return function OneAtATime(target, propertyKey, descriptor) {
+        let originalMethod = descriptor.value;
+        //wrap the original method
+        descriptor.value = function value(...args) {
+            var _a, _b;
+            var _c;
+            //ensure the promise structure exists for this call
+            (_a = target.__oneAtATime) !== null && _a !== void 0 ? _a : (target.__oneAtATime = {});
+            (_b = (_c = target.__oneAtATime)[propertyKey]) !== null && _b !== void 0 ? _b : (_c[propertyKey] = Promise.resolve());
+            const timer = util_1.util.sleep(options.timeout > 0 ? options.timeout : Number.MAX_SAFE_INTEGER);
+            return Promise.race([
+                //race for the last task to resolve
+                target.__oneAtATime[propertyKey].finally(() => {
+                    var _a;
+                    (_a = timer === null || timer === void 0 ? void 0 : timer.cancel) === null || _a === void 0 ? void 0 : _a.call(timer);
+                }),
+                //race for the timeout to expire (we give up waiting for the previous task to complete)
+                timer.then(() => {
+                    //our timer fired before we had a chance to cancel it. Report the error and move on
+                    console.error(`timer expired waiting for the previous ${propertyKey} to complete. Running the next instance`, target);
+                })
+                //now we can move on to the actual task
+            ]).then(() => {
+                return originalMethod.apply(this, args);
+            });
+        };
+    };
+}
+//# sourceMappingURL=LanguageServerManager.js.map

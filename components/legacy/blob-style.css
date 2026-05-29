@@ -1,0 +1,30 @@
+body {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 28px;
+  color: #6d7176;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong {
+  color: #484a4f;
+}
+
+a {
+  color: #6f60cc;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}

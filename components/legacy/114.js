@@ -1,0 +1,4 @@
+"use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="dd674692-672e-592e-ab13-ef2869165431")}catch(e){}}();
+(self.webpackChunkbardeen_browser_extension=self.webpackChunkbardeen_browser_extension||[]).push([[114],{13025:(e,t,r)=>{async function n(e){return new Promise(t=>setTimeout(t,e))}r.d(t,{QN:()=>n})},10114:(e,t,r)=>{r.d(t,{getAPI:()=>i}),r(38792);var n=r(37217),o=r(36213),s=r(13025);let a=n.I.getLogger("BootPrompt");async function i(e,t){let r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0;try{return await e.ping(),t(e)}catch(u){let n=o.sF.from(u);if(r>8)throw Error(`Could not create an APIClient: ${u}. Is the engine booted?`);return a.error(n),await (0,s.QN)(250),i(e,t,r+1)}}}}]);
+//# debugId=dd674692-672e-592e-ab13-ef2869165431

@@ -1,0 +1,2 @@
+import{n as e}from"./vscode-api-Bi7RdfNd.js";function t(e){return e.length===1&&e[0]===`~`}async function n(n){if(!t(n))return n;let{cwd:r}=await e(`projectless-thread-cwd`);return[r]}function r(e){return e??`~`}export{n,t as r,r as t};
+//# sourceMappingURL=projectless-thread-CJ-FtJyW.js.map

@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Base rule: Deny all by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // AUTHENTICATED ACCESS: Allow read/write for all core collections if authenticated
+    // GUEST ACCESS: Allow read for development/demo (Stage 1-7 Verification)
+    
+    match /listings/{listingId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /leads/{leadId} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /sales/{saleId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /activities/{activityId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /partners/{partnerId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /audit_logs/{logId} {
+      allow create: if true;
+      allow read: if request.auth != null;
+    }
+    
+    match /vouchers/{voucherId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /proposals/{proposalId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

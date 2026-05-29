@@ -1,0 +1,17 @@
+[data-bardeen-class-add="hidden"] {
+  display: none;
+}
+[data-bardeen-class-remove="hidden"] {
+  display: block !important;
+}
+
+/**
+ * this is temporary, until most people are on 2.28 and we update the subscribe links on
+ * https://bardeen.ai/pricing to say /deeplink/subscribe by default
+ */
+[data-bardeen-class-show-2-28] {
+  display: block !important;
+}
+[data-bardeen-class-remove-2-28] {
+  display: none !important;
+}

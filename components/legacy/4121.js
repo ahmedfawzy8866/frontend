@@ -1,0 +1,18 @@
+"use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6541b762-16e2-51d7-a1e3-781566be9b3a")}catch(e){}}();
+(self.webpackChunkbardeen_browser_extension=self.webpackChunkbardeen_browser_extension||[]).push([[4121],{6025:(e,t,n)=>{n.d(t,{G:()=>p,f:()=>c});var l=n(69670),a=n(67331),o=n(14041),r=n(39716),i=n(22001),s=n(48143),u=n(28926),d=n(12171);let c={query:"",open:!1,loading:!1,reason:null},p=o.memo(function(e){let{state:t,dispatch:n}=e,l=()=>n({type:"ReportIssue/Submitted"}),a=e=>n({type:"ReportIssue/QueryChanged",query:e}),r=e=>n({type:"ReportIssue/ReasonChanged",reason:e});return o.createElement(d.e2,{style:{position:"absolute",bottom:32,right:32,zIndex:1}},o.createElement(u.ms,{width:420,isOpen:t.open,onIsOpenChanged:e=>n({type:"ReportIssue/OpenToggled",open:e}),placement:"left-end",renderContent:e=>{let{close:n}=e;return o.createElement(b,{onClose:n,value:t.query,onSubmit:l,onChange:a,onChangeReason:r,reason:t.reason})}},o.createElement(m,{disabled:t.loading,round:!0,size:"l",icon:"ChatBubbleIssueBold",tooltipText:t.loading?"Uploading...":"Report issue",variant:"flat"})))}),m=(0,r.Ay)(u.$n)`
+  --icon-color: ${l.KE7};
+  &:hover,
+  &:active {
+    --icon-color: ${l.CCs};
+  }
+`,b=(0,r.Ay)(e=>{let{onClose:t,value:n,onChange:r,onSubmit:d,onChangeReason:c,reason:p,...m}=e,b=[{label:(0,s.rD)().featureFlags.v4MiniEnabled?"Playbook doesn't run":"Agent doesn't run",value:"playbook-does-not-run"},{label:"Results are not what I expect",value:"unexpected-result"},{label:"Couldn't build a playbook",value:"can-not-build-playbook"},{label:"Other",value:"other"}],h=b.find(e=>e.value===p)??null;return o.createElement("form",{onSubmit:e=>{e.preventDefault(),p&&d()},...m},o.createElement(a.H4,{$color:l.t14,style:{fontFamily:"Outfit"}},"Having an issue?"),o.createElement(a.P,{$small:!0},"Describe what is happening in detail below - we'll take it from there."),o.createElement(u.ms,{behavior:"over",autoCloseOnContentClick:!0,renderContent:()=>b.map(e=>o.createElement(u.IU,{type:"button",key:e.value,text:e.label,active:p===e.value,onClick:()=>{c(e.value)}}))},o.createElement(u.IU,{style:{borderColor:l.MfC},type:"button",text:h?.label||"Select option",rightAddon:o.createElement(u.In,{icon:"ArrowDownOutline",size:16})})),o.createElement(u.TM.Outline,{autoHeight:!0,rows:5,placeholder:"Describe the issue",onChange:r,value:n,maxLength:i.Y}),o.createElement(a.a,{$small:!0},'By clicking "Send Report", I agree to share app debugging data with Bardeen to assist with this issue.'),o.createElement(u.VP,{center:!0,style:{marginBottom:8}},o.createElement(u.$n,{size:"l",round:!0,variant:"primary",text:"Send Report",type:"submit",disabled:!p})))})`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 24px;
+  align-items: stretch;
+  align-self: stretch;
+  text-align: center;
+`},81:(e,t,n)=>{n.d(t,{$n:()=>l.$n,$u:()=>l.$u,B0:()=>l.B0,Fe:()=>l.Fe,Gm:()=>l.Gm,KB:()=>r.K,KN:()=>l.KN,Kf:()=>l.Kf,M5:()=>a.M,Ni:()=>l.Ni,RT:()=>l.RT,Sc:()=>l.Sc,Su:()=>l.Su,TM:()=>l.TM,b2:()=>l.b2,dN:()=>l.dN,hJ:()=>l.hJ,hj:()=>l.hj,i8:()=>l.i8,k:()=>l.k,ln:()=>l.ln,n9:()=>s.A,oB:()=>o.o,qw:()=>l.qw,registerAppWindowModule:()=>l.BZ,registerCustomWidgets_v2:()=>l.tW,sr:()=>l.sr,vR:()=>l.vR,wQ:()=>i.w});var l=n(99530);n(96326);var a=n(86439),o=n(58756);n(88645),n(11778),n(48143),n(14166);var r=n(19585);n(21799),n(21714);var i=n(36674),s=n(85040)}}]);
+//# debugId=6541b762-16e2-51d7-a1e3-781566be9b3a

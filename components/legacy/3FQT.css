@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --sb-navy: #0a1628;
+  --sb-gold: #d8b658;
+  --sb-sand: #f4f1e6;
+  --sb-ink: #111827;
+  --sb-cloud: #f8fafc;
+  --sb-card: #ffffff;
+  --sb-muted: #6b7280;
+  --sb-border: rgba(12, 18, 40, 0.08);
+  --radius: 14px;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--sb-cloud);
+  --color-foreground: var(--sb-ink);
+  --color-primary: var(--sb-navy);
+  --color-accent: var(--sb-gold);
+  --color-muted: var(--sb-muted);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(201, 168, 76, 0.08), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(10, 22, 40, 0.08), transparent 28%),
+    var(--sb-cloud);
+  color: var(--sb-ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--sb-border);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(10, 22, 40, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.rtl {
+  direction: rtl;
+  font-family: "Inter", "Noto Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--sb-navy), #122544);
+  color: #fff;
+  font-weight: 600;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 15px 40px rgba(10, 22, 40, 0.25);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(10, 22, 40, 0.08);
+  color: var(--sb-navy);
+  font-weight: 600;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.responsive-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.image-pill {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--sb-border);
+}
+
+.shadow-soft {
+  box-shadow: 0 10px 50px rgba(10, 22, 40, 0.12);
+}

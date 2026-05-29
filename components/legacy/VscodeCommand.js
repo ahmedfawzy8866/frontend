@@ -1,0 +1,31 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VscodeCommand = void 0;
+var VscodeCommand;
+(function (VscodeCommand) {
+    VscodeCommand["rokuDeviceViewRefreshScreenshot"] = "extension.brightscript.rokuDeviceView.refreshScreenshot";
+    VscodeCommand["rokuDeviceViewResumeScreenshotCapture"] = "extension.brightscript.rokuDeviceView.resumeScreenshotCapture";
+    VscodeCommand["rokuDeviceViewPauseScreenshotCapture"] = "extension.brightscript.rokuDeviceView.pauseScreenshotCapture";
+    VscodeCommand["rokuDeviceViewCopyScreenshot"] = "extension.brightscript.rokuDeviceView.copyScreenshot";
+    VscodeCommand["rokuDeviceViewEnableNodeInspector"] = "extension.brightscript.rokuDeviceView.enableNodeInspector";
+    VscodeCommand["rokuDeviceViewDisableNodeInspector"] = "extension.brightscript.rokuDeviceView.disableNodeInspector";
+    VscodeCommand["rokuRegistryExportRegistry"] = "extension.brightscript.rokuRegistry.exportRegistry";
+    VscodeCommand["rokuRegistryImportRegistry"] = "extension.brightscript.rokuRegistry.importRegistry";
+    VscodeCommand["rokuRegistryClearRegistry"] = "extension.brightscript.rokuRegistry.clearRegistry";
+    VscodeCommand["rokuRegistryRefreshRegistry"] = "extension.brightscript.rokuRegistry.refreshRegistry";
+    VscodeCommand["rokuAutomationViewEnableAutorunOnDeploy"] = "extension.brightscript.rokuAutomationView.enableAutorunOnDeploy";
+    VscodeCommand["rokuAutomationViewDisableAutorunOnDeploy"] = "extension.brightscript.rokuAutomationView.disableAutorunOnDeploy";
+    VscodeCommand["rokuAutomationViewStartRecording"] = "extension.brightscript.rokuAutomationView.startRecording";
+    VscodeCommand["rokuAutomationViewStopRecording"] = "extension.brightscript.rokuAutomationView.stopRecording";
+    VscodeCommand["rokuAutomationViewImportAllAutomations"] = "extension.brightscript.rokuAutomationView.importAllAutomations";
+    VscodeCommand["rokuAutomationViewExportAllAutomations"] = "extension.brightscript.rokuAutomationView.exportAllAutomations";
+    VscodeCommand["enableRemoteControlMode"] = "extension.brightscript.enableRemoteControlMode";
+    VscodeCommand["disableRemoteControlMode"] = "extension.brightscript.disableRemoteControlMode";
+    VscodeCommand["rokuAppOverlaysViewAddNewOverlay"] = "extension.brightscript.rokuAppOverlaysView.addNewOverlay";
+    VscodeCommand["rokuAppOverlaysViewRemoveAllOverlays"] = "extension.brightscript.rokuAppOverlaysView.removeAllOverlays";
+    VscodeCommand["rokuFileSystemViewRefresh"] = "extension.brightscript.rokuFileSystemView.refresh";
+    VscodeCommand["disconnectFromDevice"] = "extension.brightscript.disconnectFromDevice";
+    VscodeCommand["openSceneGraphInspectorInPanel"] = "extension.brightscript.openSceneGraphInspectorInPanel";
+    VscodeCommand["clearNpmPackageCache"] = "extension.brightscript.clearNpmPackageCache";
+})(VscodeCommand = exports.VscodeCommand || (exports.VscodeCommand = {}));
+//# sourceMappingURL=VscodeCommand.js.map

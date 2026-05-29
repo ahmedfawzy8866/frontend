@@ -1,0 +1,1 @@
+!function(){"use strict";document.addEventListener("DOMContentLoaded",(()=>{console.log("drive picker script connected"),document.body.addEventListener("selectedFileFromDrive",(e=>{const t=e.detail;var d;d={type:"send_drive_file",payload:{fileData:t}},chrome.runtime.sendMessage(chrome.runtime.id,d)}))}))}();

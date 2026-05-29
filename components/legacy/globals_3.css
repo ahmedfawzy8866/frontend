@@ -1,0 +1,263 @@
+/* =========================================
+   Sierra AI REALTY — MASTER DESIGN SYSTEM
+   V12.4 Midnight & Metallic (Logo Aligned)
+   ========================================= */
+
+@import "tailwindcss";
+
+:root {
+  /* --- Universal Core (Logo Sampled) --- */
+  --sb-gold: #D4AF37;        /* Burnished Gold */
+  --sb-gold-light: #F1D38E;  /* Metallic Highlight */
+  --sb-gold-glow: rgba(212, 175, 55, 0.3);
+  --sb-navy: #0A1628;        /* Slate Navy */
+  --sb-navy-deep: #050B14;   /* Midnight Deep */
+  --sb-cyan: #4299E1;        /* Electric Cyan (Intelligence Trace) */
+  --sb-ivory: #F4F0E8;       /* Editorial Soft Ivory */
+  --sb-white: #FFFFFF;
+  
+  /* --- Typography --- */
+  /* --font-serif comes from Playfair Display loaded in layout.tsx */
+  /* --font-sans  comes from Inter loaded in layout.tsx */
+  /* --font-arabic comes from Noto Sans Arabic loaded in layout.tsx */
+  --font-apple: var(--font-sans, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif);
+
+  /* --- Spacing / Motion --- */
+  --sb-radius-sm: 8px;
+  --sb-radius-md: 16px;
+  --sb-radius-lg: 32px;
+  --sb-transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  --sb-swing-timing: 3s ease-in-out infinite alternate;
+  
+  /* --- Initial Defaults (Midnight Mode) --- */
+  --bg: var(--sb-navy-deep);
+  --surface: var(--sb-navy);
+  --text: var(--sb-ivory);
+  --text-dim: rgba(244, 240, 232, 0.6);
+  --border: rgba(212, 175, 55, 0.15);
+  --glow-color: var(--sb-gold-glow);
+}
+
+/* --- Light Theme Override --- */
+[data-theme="light"] {
+  --bg: var(--sb-ivory);
+  --surface: #FFFFFF;
+  --text: var(--sb-navy-deep);
+  --text-dim: rgba(5, 11, 20, 0.55);
+  --border: rgba(10, 22, 40, 0.12);
+  --glow-color: rgba(212, 175, 55, 0.15);
+}
+
+[data-theme="light"] body {
+  background: var(--sb-ivory);
+  color: var(--sb-navy-deep);
+}
+
+[data-theme="light"] .sbr-shield-glass {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(10, 22, 40, 0.1);
+  box-shadow: 0 8px 32px rgba(10, 22, 40, 0.08);
+}
+
+[data-theme="light"] .sbr-shield-glass:hover {
+  border-color: var(--sb-gold);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.18);
+}
+
+/* --- Master Styles --- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-apple);
+  transition: var(--sb-transition);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Arabic RTL body font override ── */
+:lang(ar) body,
+[dir="rtl"] body {
+  font-family: var(--font-arabic, "Noto Sans Arabic", sans-serif);
+}
+
+/* ─── MOUSE GLOW (was missing CSS — now fixed) ─────────────────────── */
+.mouse-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 175, 55, 0.06) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(
+    calc(var(--mouse-x-px, 50%) - 300px),
+    calc(var(--mouse-y-px, 50%) - 300px)
+  );
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+[data-theme="light"] .mouse-glow {
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 175, 55, 0.04) 0%,
+    transparent 70%
+  );
+}
+
+/* ─── LOADER (was used in page.tsx but CSS was missing) ─────────────── */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--sb-navy-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  gap: 16px;
+}
+
+.loader-logo {
+  font-family: var(--font-serif, serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--sb-gold);
+  letter-spacing: 0.1em;
+  animation: sbr-pulse-logo 2s ease-in-out infinite;
+}
+
+.loader-text {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: rgba(212, 175, 55, 0.6);
+  text-transform: uppercase;
+}
+
+@keyframes sbr-pulse-logo {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.97); }
+}
+
+/* ─── APP LAYOUT ─────────────────────────────────────────────────────── */
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+/* ─── TYPOGRAPHY UTILITIES ───────────────────────────────────────────── */
+.serif {
+  font-family: var(--font-serif, "Playfair Display", serif);
+}
+
+.arabic {
+  font-family: var(--font-arabic, "Noto Sans Arabic", sans-serif);
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+/* ─── HIGH-FIDELITY SBR UTILITIES ────────────────────────────────────── */
+@keyframes sbr-swing {
+  0%   { transform: translateY(0) rotate(-1deg); }
+  100% { transform: translateY(-10px) rotate(1deg); }
+}
+
+.animate-swing {
+  animation: var(--sb-swing-timing) sbr-swing;
+}
+
+.parallax-layer {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.sbr-circuit-bg {
+  background: radial-gradient(circle at center, rgba(66, 153, 225, 0.15) 0%, transparent 70%);
+  position: relative;
+}
+
+.sbr-circuit-bg::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h80v80h-80z' fill='none' stroke='%234299E1' stroke-opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.sbr-shield-glass {
+  background: rgba(10, 22, 40, 0.7);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border-radius: var(--sb-radius-md);
+  transition: var(--sb-transition);
+}
+
+.sbr-shield-glass:hover {
+  border-color: var(--sb-gold);
+  box-shadow: 0 15px 50px rgba(212, 175, 55, 0.15);
+  transform: translateY(-5px);
+}
+
+.text-metallic {
+  background: linear-gradient(135deg, var(--sb-gold) 0%, var(--sb-gold-light) 50%, var(--sb-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────────── */
+.btn-sbr-gold {
+  background: var(--sb-gold);
+  color: var(--sb-navy-deep);
+  padding: 14px 32px;
+  border-radius: var(--sb-radius-lg);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--sb-gold-glow);
+  transition: var(--sb-transition);
+}
+
+.btn-sbr-gold:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px var(--sb-gold-glow);
+  background: var(--sb-gold-light);
+}
+
+/* ─── MOBILE UTILITIES ───────────────────────────────────────────────── */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }

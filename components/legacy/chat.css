@@ -1,0 +1,104 @@
+html {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+  font-family: var(--vscode-font-family);
+  background-color: var(--codeium-chat-background);
+  height: 100%;
+  width: 100%;
+}
+
+/******************** Panel Layout Styles ********************/
+.react-app-container {
+  width: 100%;
+  height: 100%;
+}
+
+/******************** VS Code Theme Setup ********************/
+:root {
+  --codeium-chat-background: var(--vscode-sideBar-background);
+  --codeium-editor-background: var(--vscode-editor-background);
+  --codeium-editor-color: var(--vscode-editor-foreground);
+  --codeium-text-color: var(--vscode-foreground);
+  --codeium-link-color: var(--vscode-textLink-foreground);
+  --codeium-link-hover-color: var(--vscode-textLink-activeForeground);
+  --codeium-caption-color: rgb(180, 180, 180);
+  --codeium-message-block-user-background: var(
+    --vscode-list-activeSelectionBackground
+  );
+  --codeium-message-block-user-color: var(
+    --vscode-list-activeSelectionForeground
+  );
+  --codeium-message-block-bot-background: var(
+    --vscode-list-inactiveSelectionBackground
+  );
+  --codeium-message-block-bot-color: var(--vscode-foreground);
+  --codeium-input-color: var(--vscode-input-foreground);
+  --codeium-input-placeholder: var(--vscode-input-placeholderForeground);
+  --codeium-input-background: var(--vscode-input-background);
+  --codeium-tooltip-background: var(--vscode-list-inactiveSelectionBackground);
+  --codeium-tooltip-color: var(--vscode-foreground);
+  --codeium-active-selection-background: var(
+    --vscode-list-activeSelectionBackground
+  );
+  --codeium-active-selection-color: var(
+    --vscode-list-activeSelectionForeground
+  );
+  --codeium-badge-background: var(--vscode-badge-background);
+  --codeium-badge-color: var(--vscode-badge-foreground);
+  --codeium-editor-line-number-color: var(
+    --vscode-editorLineNumber-activeForeground
+  );
+  --codeium-sidebar-title-color: var(--vscode-sideBarTitle-foreground);
+  --codeium-icon-color: var(--vscode-icon-foreground);
+  --codeium-disabled-color: var(--vscode-disabledForeground);
+  --codeium-button-hover-background: var(--vscode-button-hoverBackground);
+  --codeium-button-background: var(--vscode-button-background);
+  --codeium-button-color: var(--vscode-button-foreground);
+  --codeium-button-secondary-hover-background: var(
+    --vscode-button-secondaryHoverBackground
+  );
+  --codeium-button-secondary-background: var(
+    --vscode-button-secondaryBackground
+  );
+  --codeium-button-secondary-color: var(--vscode-button-secondaryForeground);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 19px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #bbb 94%, #0000) top/3px 3px
+      no-repeat,
+    conic-gradient(#0000 30%, #bbb);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  animation: loading-animation 1s infinite linear;
+  transition-duration: 100ms;
+  transition-delay: 200ms;
+}
+
+@keyframes loading-animation {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+/* Reset the default typeahead menu so that it doesn't cause an overflow of the page */
+.lexical-typeahead-menu {
+  top: initial !important;
+  left: initial !important;
+}
+
+/* Prism (in react-syntax-highlighter) adds `block` to the <span> that renders the code. This
+becomes overloaded with Tailwind `block`. To combat this, we override the Tailwind class with
+this one. */
+.language-razor .block {
+  display: inherit;
+}
