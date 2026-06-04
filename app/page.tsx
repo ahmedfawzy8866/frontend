@@ -52,7 +52,7 @@ const COPY = {
     dir: 'ltr' as const,
     brand: 'SIERRA BLU', sub: 'REALTY',
     tagline: 'SIERRA-BLU REALTY | BEYOND BROKERAGE',
-    nav: ['Properties', 'Intelligence', 'Careers', 'Contact'],
+    nav: ['Properties', 'Intelligence', 'Virtual Tour', 'Careers', 'Contact'],
     cta: 'Enter Portal',
     heroTag: 'Beyond Brokerage',
     heroH1: ['New Cairo’s first dedicated SaaS platform', 'for Rent and Resale.'],
@@ -121,7 +121,7 @@ const COPY = {
     dir: 'rtl' as const,
     brand: 'سييرا بلو', sub: 'للعقارات',
     tagline: 'استشارات عقارية مدعومة بالذكاء الاصطناعي',
-    nav: ['العقارات', 'الذكاء', 'الوظائف', 'اتصل'],
+    nav: ['العقارات', 'الذكاء', 'جولة افتراضية', 'الوظائف', 'اتصل'],
     cta: 'الدخول للبوابة',
     heroTag: 'أبعد من الوساطة',
     heroH1: ['قرارات', 'أرقى.'],
@@ -192,12 +192,12 @@ const COPY = {
 //  STATIC LISTINGS (fallback while Firebase loads)
 // ══════════════════════════════════════════════════════════
 const STATIC_LISTINGS = [
-  { id: 1, title: 'Aurora Penthouse', titleAr: 'بنتهاوس أورورا', location: 'Madinaty · New Cairo', locationAr: 'مدينتي · القاهرة الجديدة', price: 'EGP 8,500,000', beds: 4, baths: 3, sqft: '320 m²', badge: 'Hidden Gem', badgeColor: '#7C3AED', img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80' },
-  { id: 2, title: 'Villa Lumière', titleAr: 'فيلا لوميير', location: 'Mountain View · 5th Settlement', locationAr: 'ماونتن فيو · التجمع الخامس', price: 'EGP 14,200,000', beds: 5, baths: 4, sqft: '480 m²', badge: 'Featured', badgeColor: '#C8961A', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80' },
-  { id: 3, title: 'The Boulevard', titleAr: 'ذا بوليفار', location: 'Mostakbal City · Future', locationAr: 'مستقبل سيتي · المستقبل', price: 'EGP 3,800,000', beds: 3, baths: 2, sqft: '185 m²', badge: 'New', badgeColor: '#1B6CA8', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80' },
-  { id: 4, title: 'Emirates Crown', titleAr: 'إيمارتس كراون', location: 'Fifth Settlement · Cairo', locationAr: 'التجمع الخامس · القاهرة', price: 'EGP 22,000,000', beds: 6, baths: 5, sqft: '650 m²', badge: 'Off Market', badgeColor: '#059669', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80' },
-  { id: 5, title: 'Palm Residences', titleAr: 'بالم ريزيدنسز', location: 'Madinaty · Block 7', locationAr: 'مدينتي · بلوك ٧', price: 'EGP 5,900,000', beds: 3, baths: 3, sqft: '240 m²', badge: 'High ROI', badgeColor: '#DC2626', img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=80' },
-  { id: 6, title: 'Sky Tower Penthouse', titleAr: 'بنتهاوس سكاي تاور', location: 'Downtown New Cairo', locationAr: 'وسط القاهرة الجديدة', price: 'EGP 11,500,000', beds: 4, baths: 4, sqft: '380 m²', badge: 'Price Reduced', badgeColor: '#D97706', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=80' },
+  { id: 1, title: 'Aurora Penthouse', titleAr: 'بنتهاوس أورورا', location: 'Madinaty · New Cairo', locationAr: 'مدينتي · القاهرة الجديدة', price: 'EGP 8,500,000', beds: 4, baths: 3, sqft: '320 m²', badge: 'Hidden Gem', badgeColor: '#7C3AED', img: '/nc-penthouse.png' },
+  { id: 2, title: 'Villa Lumière', titleAr: 'فيلا لوميير', location: 'Mountain View · 5th Settlement', locationAr: 'ماونتن فيو · التجمع الخامس', price: 'EGP 14,200,000', beds: 5, baths: 4, sqft: '480 m²', badge: 'Featured', badgeColor: '#C8961A', img: '/nc-villa.png' },
+  { id: 3, title: 'The Boulevard', titleAr: 'ذا بوليفار', location: 'Mostakbal City · Future', locationAr: 'مستقبل سيتي · المستقبل', price: 'EGP 3,800,000', beds: 3, baths: 2, sqft: '185 m²', badge: 'New', badgeColor: '#1B6CA8', img: '/nc-apt.png' },
+  { id: 4, title: 'Emirates Crown', titleAr: 'إيمارتس كراون', location: 'Fifth Settlement · Cairo', locationAr: 'التجمع الخامس · القاهرة', price: 'EGP 22,000,000', beds: 6, baths: 5, sqft: '650 m²', badge: 'Off Market', badgeColor: '#059669', img: '/nc-villa.png' },
+  { id: 5, title: 'Palm Residences', titleAr: 'بالم ريزيدنسز', location: 'Madinaty · Block 7', locationAr: 'مدينتي · بلوك ٧', price: 'EGP 5,900,000', beds: 3, baths: 3, sqft: '240 m²', badge: 'High ROI', badgeColor: '#DC2626', img: '/nc-apt.png' },
+  { id: 6, title: 'Sky Tower Penthouse', titleAr: 'بنتهاوس سكاي تاور', location: 'Downtown New Cairo', locationAr: 'وسط القاهرة الجديدة', price: 'EGP 11,500,000', beds: 4, baths: 4, sqft: '380 m²', badge: 'Price Reduced', badgeColor: '#D97706', img: '/nc-penthouse.png' },
 ];
 
 const ZONE_COORDS: [number, number][] = [
@@ -300,15 +300,47 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="hidden md:flex" style={{ gap: 32, alignItems: 'center' }}>
-          {T.nav.map((n) => (
-            <span key={n} className="hover:text-secondary transition-colors cursor-pointer" style={{ fontSize: 11, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: th.textSub, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>{n}</span>
-          ))}
+          {T.nav.map((n) => {
+            const isCareers = n === 'Careers' || n === 'الوظائف';
+            const isVirtualTour = n === 'Virtual Tour' || n === 'جولة افتراضية';
+            
+            if (isVirtualTour) {
+              return (
+                <Link key={n} href="/virtual-tour" className="hover:text-secondary transition-colors cursor-pointer" style={{ textDecoration: 'none', fontSize: 11, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: th.textSub, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                  {n}
+                </Link>
+              );
+            }
+
+            const handleClick = () => {
+              if (isCareers) {
+                setActiveTab('careers');
+              } else {
+                setActiveTab('explore');
+                const targetId = n === 'Properties' || n === 'العقارات' ? 'properties' :
+                                 n === 'Intelligence' || n === 'الذكاء' ? 'intelligence' :
+                                 n === 'Contact' || n === 'اتصل' ? 'contact' : '';
+                if (targetId) {
+                  setTimeout(() => {
+                    const el = document.getElementById(targetId);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
+              }
+            };
+
+            return (
+              <span key={n} onClick={handleClick} className="hover:text-secondary transition-colors cursor-pointer" style={{ fontSize: 11, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: th.textSub, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                {n}
+              </span>
+            );
+          })}
         </div>
         <div className="flex items-center gap-2.5">
           <button onClick={() => setLocale(locale === 'ar' ? 'en' : 'ar')} style={{ background: th.surface, border: `1px solid ${th.border}`, color: G, padding: '6px 14px', borderRadius: 4, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', cursor: 'pointer', fontFamily: "'Jost', sans-serif" }}>
             {lang === 'en' ? 'AR' : 'EN'}
           </button>
-          <button onClick={() => setTheme(mode === 'dark' ? 'light' : 'dark')} style={{ background: th.surface, border: `1px solid ${th.border}`, color: th.textSub, width: 34, height: 34, borderRadius: '50%', cursor: 'pointer', fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <button aria-label="Toggle theme" onClick={() => setTheme(mode === 'dark' ? 'light' : 'dark')} style={{ background: th.surface, border: `1px solid ${th.border}`, color: th.textSub, width: 34, height: 34, borderRadius: '50%', cursor: 'pointer', fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {mode === 'dark' ? '☀' : '🌙'}
           </button>
           <button className="hidden sm:inline-flex" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'transparent', color: th.text, border: `1px solid ${th.border}`, cursor: 'pointer', fontFamily: "'Jost', sans-serif", fontSize: 10, fontWeight: 500, letterSpacing: '.14em', textTransform: 'uppercase', padding: '8px 18px', borderRadius: 4 }}>{T.cta}</button>
@@ -319,7 +351,7 @@ export default function LandingPage() {
 <>
 {/* ══ HERO ══ */}
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: th.heroBg }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80')", backgroundSize: 'cover', backgroundPosition: 'center', transform: loaded ? 'scale(1)' : 'scale(1.06)', transition: 'transform 2s cubic-bezier(.16,1,.3,1)', opacity: mode === 'dark' ? 0.75 : 0.85 }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/nc-villa.png')", backgroundSize: 'cover', backgroundPosition: 'center', transform: loaded ? 'scale(1)' : 'scale(1.06)', transition: 'transform 2s cubic-bezier(.16,1,.3,1)', opacity: mode === 'dark' ? 0.75 : 0.85 }} />
         <div style={{ position: 'absolute', inset: 0, background: mode === 'dark' ? 'linear-gradient(to bottom, rgba(10,21,32,.85) 0%, rgba(13,32,53,.7) 45%, rgba(10,21,32,.95) 100%)' : 'linear-gradient(to bottom, rgba(192,214,212,.8) 0%, rgba(213,232,230,.6) 50%, rgba(192,214,212,.9) 100%)' }} />
         <ParticleCanvas />
 
@@ -332,7 +364,7 @@ export default function LandingPage() {
               </div>
 
               <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(40px, 5.5vw, 80px)', fontWeight: 300, color: th.text, lineHeight: 1.05, letterSpacing: '-0.02em', margin: '20px 0 16px', textAlign: isAr ? 'right' : 'left', animation: loaded ? 'fadeUp .7s ease .2s both' : 'none' }}>
-                {T.heroH1[0]}<br />{T.heroH1[1]}
+                {T.heroH1[0]} <img src="/nc-hero.png" alt="" style={{ height: '0.8em', width: '1.6em', display: 'inline-block', verticalAlign: 'baseline', borderRadius: '40px', margin: '0 12px', objectFit: 'cover' }} /> <br />{T.heroH1[1]}
                 {T.heroItalic && <><br /><em className="gold-text" style={{ fontStyle: 'italic' }}>{T.heroItalic}</em></>}
               </h1>
 
@@ -408,7 +440,7 @@ export default function LandingPage() {
       </section>
 
       {/* ══ LISTINGS ══ */}
-      <section ref={listingsSectionRef} style={{ background: mode === 'dark' ? '#0A1520' : th.bgAlt, padding: '80px 0' }}>
+      <section id="properties" ref={listingsSectionRef} style={{ background: mode === 'dark' ? '#0A1520' : th.bgAlt, padding: '80px 0' }}>
         <div style={sec}>
           <div className="reveal flex justify-between items-end mb-10 flex-wrap gap-4" style={{ flexDirection: isAr ? 'row-reverse' : 'row' }}>
             <div style={{ textAlign: isAr ? 'right' : 'left' }}>
@@ -475,7 +507,7 @@ export default function LandingPage() {
       </section>
 
       {/* ══ INTELLIGENCE MAP ══ */}
-      <section style={{ background: mode === 'dark' ? '#091828' : th.bgAlt, padding: '96px 0' }}>
+      <section id="intelligence" style={{ background: mode === 'dark' ? '#091828' : th.bgAlt, padding: '96px 0' }}>
         <div style={sec}>
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div style={{ order: isAr ? 2 : 1 }}>
@@ -515,7 +547,7 @@ export default function LandingPage() {
 
       
       {/* ══ VIRTUAL TOUR ══ */}
-      <section style={{ background: th.bg, padding: '96px 0', borderTop: `1px solid ${th.border}` }}>
+      <section id="virtual-tour" style={{ background: th.bg, padding: '96px 0', borderTop: `1px solid ${th.border}` }}>
         <div style={sec}>
           <div className="reveal text-center mb-10">
             <span style={{ fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: G, fontFamily: "'Jost', sans-serif" }}>
@@ -526,7 +558,14 @@ export default function LandingPage() {
             </h2>
           </div>
           <div className="reveal">
-            <LuxuryVirtualViewport tourUrl="https://kuula.co/share/collection/7K_XG?logo=0&info=0&fs=1&vr=1&sd=1&thumbs=1" sbrCode="MVD-3F-110K" />
+            <LuxuryVirtualViewport />
+          </div>
+          <div className="reveal" style={{ marginTop: 32, textAlign: 'center' }}>
+            <Link href="/virtual-tour">
+              <button style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `linear-gradient(135deg,${G2},${G})`, color: '#071422', border: 'none', cursor: 'pointer', fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: isAr ? '.02em' : '.14em', textTransform: 'uppercase', padding: '14px 32px', borderRadius: 4, boxShadow: '0 4px 20px rgba(233,193,118,0.26)' }}>
+                {isAr ? 'ابدأ الجولات التفاعلية ثلاثية الأبعاد ←' : 'Launch Interactive 360° Tours →'}
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -604,7 +643,7 @@ export default function LandingPage() {
       </section>
 
       {/* ══ CTA FORM ══ */}
-      <section style={{ padding: '96px 0', background: mode === 'dark' ? 'linear-gradient(135deg, #0A1520, #0D2035)' : `linear-gradient(135deg, ${th.bg}, ${th.bgAlt})`, borderTop: `1px solid ${th.border}` }}>
+      <section id="contact" style={{ padding: '96px 0', background: mode === 'dark' ? 'linear-gradient(135deg, #0A1520, #0D2035)' : `linear-gradient(135deg, ${th.bg}, ${th.bgAlt})`, borderTop: `1px solid ${th.border}` }}>
         <div style={{ ...sec, maxWidth: 600 }}>
           <div className="reveal text-center mb-10">
             <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.24em', textTransform: 'uppercase', color: G, marginBottom: 10, fontFamily: "'Jost', sans-serif" }}>{T.ctaTag}</div>
