@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import ConciergeGallery from '@/components/Proposals/ConciergeGallery';
 import type { ConciergeSelection, ConciergeUnit } from '@/lib/services/portfolio-engine';
 import { useSierraBlu } from '@/hooks/useSierraBlu';
-import { LuxuryCard, EditorialHeading } from '@/components/UI/LuxurySkeleton';
+import { LuxuryCard, EditorialHeading } from '@/components/ui/LuxurySkeleton';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { COLLECTIONS } from '@/lib/models/schema';

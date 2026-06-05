@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { db } from '../../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { I18nProvider, useI18n } from '../../lib/I18nContext';
-import LanguageToggle from '../../components/UI/LanguageToggle';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import { SiteConfig } from '../../lib/config';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 

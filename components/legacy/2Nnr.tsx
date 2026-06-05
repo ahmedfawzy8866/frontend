@@ -8,7 +8,7 @@ import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { COLLECTIONS } from '@/lib/models/schema';
 import { useSierraBlu } from '@/hooks/useSierraBlu';
-import { LuxuryCard, EditorialHeading } from '@/components/UI/LuxurySkeleton';
+import { LuxuryCard, EditorialHeading } from '@/components/ui/LuxurySkeleton';
 
 /** Inline version — avoids importing the server-only portfolio-engine on the client */
 async function trackEngagement(
