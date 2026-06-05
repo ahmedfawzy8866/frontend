@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../lib/AuthContext';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import Topbar from '../UI/Topbar';
-import Sidebar from '../UI/Sidebar';
+import Topbar from '../ui/Topbar';
+import Sidebar from '../ui/Sidebar';
 import { useRouter } from 'next/navigation';
 import { useI18n } from '../../lib/I18nContext';
 
