@@ -192,12 +192,12 @@ const COPY = {
 //  STATIC LISTINGS (fallback while Firebase loads)
 // ══════════════════════════════════════════════════════════
 const STATIC_LISTINGS = [
-  { id: 1, title: 'Aurora Penthouse', titleAr: 'بنتهاوس أورورا', location: 'Madinaty · New Cairo', locationAr: 'مدينتي · القاهرة الجديدة', price: 'EGP 8,500,000', beds: 4, baths: 3, sqft: '320 m²', badge: 'Hidden Gem', badgeColor: '#7C3AED', img: '/nc-penthouse.png' },
-  { id: 2, title: 'Villa Lumière', titleAr: 'فيلا لوميير', location: 'Mountain View · 5th Settlement', locationAr: 'ماونتن فيو · التجمع الخامس', price: 'EGP 14,200,000', beds: 5, baths: 4, sqft: '480 m²', badge: 'Featured', badgeColor: '#C8961A', img: '/nc-villa.png' },
-  { id: 3, title: 'The Boulevard', titleAr: 'ذا بوليفار', location: 'Mostakbal City · Future', locationAr: 'مستقبل سيتي · المستقبل', price: 'EGP 3,800,000', beds: 3, baths: 2, sqft: '185 m²', badge: 'New', badgeColor: '#1B6CA8', img: '/nc-apt.png' },
-  { id: 4, title: 'Emirates Crown', titleAr: 'إيمارتس كراون', location: 'Fifth Settlement · Cairo', locationAr: 'التجمع الخامس · القاهرة', price: 'EGP 22,000,000', beds: 6, baths: 5, sqft: '650 m²', badge: 'Off Market', badgeColor: '#059669', img: '/nc-villa.png' },
-  { id: 5, title: 'Palm Residences', titleAr: 'بالم ريزيدنسز', location: 'Madinaty · Block 7', locationAr: 'مدينتي · بلوك ٧', price: 'EGP 5,900,000', beds: 3, baths: 3, sqft: '240 m²', badge: 'High ROI', badgeColor: '#DC2626', img: '/nc-apt.png' },
-  { id: 6, title: 'Sky Tower Penthouse', titleAr: 'بنتهاوس سكاي تاور', location: 'Downtown New Cairo', locationAr: 'وسط القاهرة الجديدة', price: 'EGP 11,500,000', beds: 4, baths: 4, sqft: '380 m²', badge: 'Price Reduced', badgeColor: '#D97706', img: '/nc-penthouse.png' },
+  { id: 1, title: 'Mivida Standalone Villa', titleAr: 'فيلا مستقلة ميفيدا', type: 'Villa', typeAr: 'فيلا', location: 'Mivida · 5th Settlement', locationAr: 'ميفيدا · التجمع الخامس', price: 'EGP 24,500,000', beds: 5, baths: 4, sqft: '520 m²', badge: 'Featured', badgeColor: '#C8961A', img: '/mivida-villa.png' },
+  { id: 2, title: 'Lake View Sky Penthouse', titleAr: 'بنتهاوس سكاي ليك فيو', type: 'Penthouse', typeAr: 'بنتهاوس', location: 'Lake View · New Cairo', locationAr: 'ليك فيو · القاهرة الجديدة', price: 'EGP 18,200,000', beds: 4, baths: 3, sqft: '380 m²', badge: 'Off Market', badgeColor: '#059669', img: '/lakeview-penthouse.png' },
+  { id: 3, title: 'Hyde Park Duplex', titleAr: 'دوبلكس هايد بارك', type: 'Duplex', typeAr: 'دوبلكس', location: 'Hyde Park · 5th Settlement', locationAr: 'هايد بارك · التجمع الخامس', price: 'EGP 9,800,000', beds: 3, baths: 3, sqft: '280 m²', badge: 'High ROI', badgeColor: '#DC2626', img: '/hyde-park-duplex.png' },
+  { id: 4, title: 'Uptown Cairo Twin House', titleAr: 'تاون هاوس توين أبتاون كايرو', type: 'Twin House', typeAr: 'تاون هاوس توين', location: 'Uptown Cairo · Mokattam', locationAr: 'أبتاون كايرو · المقطم', price: 'EGP 15,700,000', beds: 4, baths: 3, sqft: '420 m²', badge: 'City Views', badgeColor: '#7C3AED', img: '/uptown-twin.png' },
+  { id: 5, title: 'Mivida Townhouse', titleAr: 'تاون هاوس ميفيدا', type: 'Townhouse', typeAr: 'تاون هاوس', location: 'Mivida · 5th Settlement', locationAr: 'ميفيدا · التجمع الخامس', price: 'EGP 7,900,000', beds: 3, baths: 2, sqft: '240 m²', badge: 'New', badgeColor: '#1B6CA8', img: '/mivida-townhouse.png' },
+  { id: 6, title: 'Hyde Park Grand Villa', titleAr: 'فيلا هايد بارك الكبرى', type: 'Villa', typeAr: 'فيلا', location: 'Hyde Park · New Cairo', locationAr: 'هايد بارك · القاهرة الجديدة', price: 'EGP 32,000,000', beds: 6, baths: 5, sqft: '680 m²', badge: 'Exclusive', badgeColor: '#C8961A', img: '/hyde-park-villa.png' },
 ];
 
 const ZONE_COORDS: [number, number][] = [
@@ -364,7 +364,7 @@ export default function LandingPage() {
               </div>
 
               <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(40px, 5.5vw, 80px)', fontWeight: 300, color: th.text, lineHeight: 1.05, letterSpacing: '-0.02em', margin: '20px 0 16px', textAlign: isAr ? 'right' : 'left', animation: loaded ? 'fadeUp .7s ease .2s both' : 'none' }}>
-                {T.heroH1[0]} <img src="/nc-hero.png" alt="" style={{ height: '0.8em', width: '1.6em', display: 'inline-block', verticalAlign: 'baseline', borderRadius: '40px', margin: '0 12px', objectFit: 'cover' }} /> <br />{T.heroH1[1]}
+                {T.heroH1[0]} <img src="/mivida-villa.png" alt="Mivida Villa" style={{ height: '0.8em', width: '1.6em', display: 'inline-block', verticalAlign: 'baseline', borderRadius: '40px', margin: '0 12px', objectFit: 'cover' }} /> <br />{T.heroH1[1]}
                 {T.heroItalic && <><br /><em className="gold-text" style={{ fontStyle: 'italic' }}>{T.heroItalic}</em></>}
               </h1>
 
@@ -381,9 +381,9 @@ export default function LandingPage() {
               {/* HERO FILTER */}
               <div className="reveal grid grid-cols-1 sm:grid-cols-3 md:grid-cols-[1fr_1fr_1fr_auto] gap-0 rounded-lg overflow-hidden mt-8" style={{ background: mode === 'dark' ? 'rgba(18, 42, 71, 0.8)' : 'rgba(255, 255, 255, 0.8)', border: `1px solid ${th.border}`, boxShadow: '0 8px 32px rgba(0,0,0,0.15)', backdropFilter: 'blur(16px)', animation: loaded ? 'fadeUp .7s ease .6s both' : 'none' }}>
                 {[
-                  { label: T.searchType, opts: isAr ? ['شقة', 'فيلا', 'دوبلكس', 'بنتهاوس'] : ['Apartment', 'Villa', 'Duplex', 'Penthouse'] },
-                  { label: T.searchCompound, opts: isAr ? ['التجمع الخامس', 'مدينتي', 'ماونتن فيو', 'مستقبل'] : ['Fifth Settlement', 'Madinaty', 'Mountain View', 'Mostakbal'] },
-                  { label: T.searchBudget, opts: isAr ? ['أقل من ٥م', '٥م–١٠م', '١٠م–٢٠م', 'أكثر من ٢٠م'] : ['Under 5M EGP', '5–10M EGP', '10–20M EGP', '20M+ EGP'] },
+                  { label: T.searchType, opts: isAr ? ['فيلا', 'بنتهاوس', 'دوبلكس', 'تاون هاوس', 'توين هاوس'] : ['Villa', 'Penthouse', 'Duplex', 'Townhouse', 'Twin House'] },
+                  { label: T.searchCompound, opts: isAr ? ['ميفيدا', 'ليك فيو', 'هايد بارك', 'أبتاون كايرو'] : ['Mivida', 'Lake View', 'Hyde Park', 'Uptown Cairo'] },
+                  { label: T.searchBudget, opts: isAr ? ['أقل من ١٠م', '١٠م–٢٠م', '٢٠م–٣٥م', 'أكثر من ٣٥م'] : ['Under 10M EGP', '10–20M EGP', '20–35M EGP', '35M+ EGP'] },
                 ].map((seg, i) => (
                   <div key={i} style={{ padding: '14px 18px', borderRight: `1px solid ${th.border}` }}>
                     <div style={{ fontSize: 9, fontWeight: 500, letterSpacing: '.16em', textTransform: 'uppercase', color: th.textMuted, marginBottom: 3, fontFamily: "'Jost', sans-serif" }}>{seg.label}</div>
