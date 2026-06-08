@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sierra Estates</string>
+    <string name="title_activity_main">Sierra Estates</string>
+    <string name="package_name">com.sierraestates.app</string>
+    <string name="custom_url_scheme">com.sierraestates.app</string>
+</resources>

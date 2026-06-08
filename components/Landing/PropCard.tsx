@@ -21,14 +21,14 @@ interface PropCardProps {
 
 const SPEC_FONT: React.CSSProperties = {
   fontFamily: "'DM Mono', monospace",
-  fontSize: 13,
+  fontSize: 11,
   fontWeight: 400,
   color: 'var(--on-surface-variant)',
 };
 
 const ICON: React.SVGAttributes<SVGSVGElement> = {
-  width: 16,
-  height: 16,
+  width: 14,
+  height: 14,
   viewBox: '0 0 24 24',
   fill: 'none',
   stroke: 'var(--on-surface-variant)',
@@ -40,7 +40,7 @@ const ICON: React.SVGAttributes<SVGSVGElement> = {
 function Spec({ icon, children, end, isAr }: { icon: React.ReactNode; children: React.ReactNode; end?: boolean; isAr?: boolean }) {
   return (
     <div
-      className="flex items-center gap-1.5"
+      className="flex items-center gap-1"
       style={end ? { marginLeft: isAr ? 0 : 'auto', marginRight: isAr ? 'auto' : 0 } : undefined}
     >
       {icon}
@@ -67,13 +67,13 @@ export default function PropCard({ id, title, location, price, beds, baths, sqft
           background: 'var(--surface-container-high)',
           border: `1px solid ${hov ? 'rgba(233,193,118,0.35)' : 'var(--outline-variant)'}`,
           boxShadow: hov
-            ? '0 20px 48px rgba(0,0,0,0.35), 0 0 24px rgba(233,193,118,0.10)'
-            : '0 4px 20px rgba(0,0,0,0.12)',
-          transform: hov ? 'translateY(-5px)' : 'none',
+            ? '0 15px 36px rgba(0,0,0,0.3), 0 0 16px rgba(233,193,118,0.08)'
+            : '0 4px 14px rgba(0,0,0,0.1)',
+          transform: hov ? 'translateY(-3px)' : 'none',
         }}
       >
         {/* Image */}
-        <div className="relative h-[230px] overflow-hidden" style={{ background: '#0A1E35' }}>
+        <div className="relative h-[140px] overflow-hidden" style={{ background: '#0A1E35' }}>
           <img
             src={img}
             alt={title}
@@ -85,16 +85,16 @@ export default function PropCard({ id, title, location, price, beds, baths, sqft
             style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)' }}
           />
           <span
-            className="absolute top-3.5 text-white uppercase"
+            className="absolute top-2.5 text-white uppercase"
             style={{
-              [isAr ? 'right' : 'left']: 14,
+              [isAr ? 'right' : 'left']: 10,
               background: badgeColor,
               fontFamily: "'Jost', sans-serif",
-              fontSize: 11,
+              fontSize: 9,
               fontWeight: 700,
               letterSpacing: '.06em',
-              padding: '5px 14px',
-              borderRadius: 5,
+              padding: '4px 10px',
+              borderRadius: 4,
             }}
           >
             {badge}
@@ -102,15 +102,15 @@ export default function PropCard({ id, title, location, price, beds, baths, sqft
         </div>
 
         {/* Content */}
-        <div style={{ padding: '20px 24px 22px' }}>
+        <div style={{ padding: '12px 16px 14px' }}>
           {/* Compound */}
           <div style={{
-            fontSize: 12,
+            fontSize: 10,
             fontWeight: 600,
             letterSpacing: '.12em',
             textTransform: 'uppercase',
             color: '#E9C176',
-            marginBottom: 6,
+            marginBottom: 4,
             fontFamily: "'Jost', sans-serif",
             textAlign: align,
           }}>
@@ -120,12 +120,17 @@ export default function PropCard({ id, title, location, price, beds, baths, sqft
           {/* Title */}
           <div style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 24,
+            fontSize: 18,
             fontWeight: 600,
             color: 'var(--on-surface)',
             lineHeight: 1.15,
-            marginBottom: 12,
+            marginBottom: 8,
             textAlign: align,
+            height: '2.3em',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
           }}>
             {title}
           </div>
@@ -133,21 +138,21 @@ export default function PropCard({ id, title, location, price, beds, baths, sqft
           {/* Price */}
           <div style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 22,
+            fontSize: 16,
             fontWeight: 500,
             color: '#E9C176',
             letterSpacing: '-.02em',
-            marginBottom: 18,
+            marginBottom: 10,
             textAlign: align,
           }}>
             {price}
           </div>
 
           {/* Divider */}
-          <div style={{ height: 1, background: 'var(--outline-variant)', marginBottom: 16 }} />
+          <div style={{ height: 1, background: 'var(--outline-variant)', marginBottom: 10 }} />
 
           {/* Specs */}
-          <div className="flex items-center" style={{ gap: 22, flexDirection: isAr ? 'row-reverse' : 'row' }}>
+          <div className="flex items-center" style={{ gap: 12, flexDirection: isAr ? 'row-reverse' : 'row' }}>
             <Spec icon={
               <svg {...ICON}>
                 <path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7" />

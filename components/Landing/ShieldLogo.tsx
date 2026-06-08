@@ -20,7 +20,7 @@ export default function ShieldLogo({ size = 44 }: { size?: number }) {
     >
       <Image
         src="/media__1776833126426.png"
-        alt="Sierra Blu"
+        alt="Sierra Estates"
         width={size}
         height={size * 1.4}
         style={{

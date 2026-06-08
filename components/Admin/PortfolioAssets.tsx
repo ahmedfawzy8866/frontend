@@ -127,6 +127,23 @@ export default function PortfolioAssets() {
         </div>
         <div className="flex items-center gap-4">
           <button 
+            onClick={async () => {
+              const loadToast = toast.loading("Executing Property Finder synchronization...");
+              try {
+                const res = await fetch('/api/sync?action=sync-listings', { method: 'POST' });
+                if (!res.ok) throw new Error("Sync failed");
+                toast.success("Property Finder listings synchronized successfully.", { id: loadToast });
+                refetch();
+              } catch (err) {
+                toast.error("Property Finder sync gateway failed.", { id: loadToast });
+              }
+            }}
+            className="bg-white/5 border border-white/10 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-white/10 transition-all flex items-center gap-3 group"
+          >
+            <Globe size={18} className="text-gold group-hover:scale-110 transition-transform" />
+            Sync Property Finder
+          </button>
+          <button 
             onClick={() => setIsPasteOpen(true)}
             className="bg-white/5 border border-white/10 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-white/10 transition-all flex items-center gap-3 group"
           >
@@ -220,6 +237,7 @@ export default function PortfolioAssets() {
               <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Primary Descriptor</th>
               <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Compound</th>
               <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Valuation</th>
+              <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Featured</th>
               <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Status</th>
               <th className="p-6 text-[11px] font-black text-white/30 uppercase tracking-widest">Freshness</th>
               <th className="p-6 text-right text-[11px] font-black text-white/30 uppercase tracking-widest">Actions</th>
@@ -260,6 +278,24 @@ export default function PortfolioAssets() {
                 <td className="p-6">
                   <div className="font-black text-white text-base">{prop.price.toLocaleString()} <span className="text-[10px] text-white/30">{prop.currency}</span></div>
                   <div className="text-[10px] font-black text-gold/60 uppercase tracking-widest mt-1">{prop.offer_type}</div>
+                </td>
+                <td className="p-6">
+                  <button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      const nextFeatured = !prop.is_featured;
+                      try {
+                        await updateProperty(prop.id, { is_featured: nextFeatured });
+                        toast.success(nextFeatured ? "Asset promoted to Featured Showcase." : "Asset removed from Featured Showcase.");
+                        refetch();
+                      } catch (err) {
+                        toast.error("Failed to update featured status.");
+                      }
+                    }}
+                    className="p-2 rounded-xl bg-white/5 hover:bg-gold/10 transition-all text-white/50 hover:text-gold"
+                  >
+                    <Star size={18} className={prop.is_featured ? "fill-gold text-gold" : "text-white/30"} />
+                  </button>
                 </td>
                 <td className="p-6">
                   <div className="flex items-center gap-2">

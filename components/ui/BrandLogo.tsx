@@ -68,8 +68,8 @@ export default function BrandLogo({
     const { width, height } = emblemSizes[size];
     return (
       <img
-        src="/sierra-blu-logo.png"
-        alt="Sierra Blu Realty"
+        src="/media__1776833126426.png"
+        alt="Sierra Estates"
         draggable={false}
         width={width}
         height={height}
@@ -87,13 +87,13 @@ export default function BrandLogo({
     );
   }
 
-  // ── EMBLEM VARIANT (SVG) ─────────────────────────────────────────────────
+  // ── EMBLEM VARIANT (SVG / Brand Shield) ──────────────────────────────────
   if (variant === 'emblem') {
     const { width, height } = emblemSizes[size];
     return (
       <img
-        src="/sierra-blu-emblem.svg"
-        alt="Sierra Blu Realty Shield"
+        src="/media__1776833126426.png"
+        alt="Sierra Estates Shield"
         draggable={false}
         width={width}
         height={height}
@@ -126,7 +126,7 @@ export default function BrandLogo({
     >
       <img
         src="/sierra-blu-logo.jpg"
-        alt="Sierra Blu Realty"
+        alt="Sierra Estates"
         draggable={false}
         style={{
           position: 'absolute',

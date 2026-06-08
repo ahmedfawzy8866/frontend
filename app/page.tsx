@@ -50,7 +50,7 @@ const THEMES = {
 const COPY = {
   en: {
     dir: 'ltr' as const,
-    brand: 'SIERRA BLU', sub: 'REALTY',
+    brand: 'SIERRA ESTATES', sub: 'REALTY',
     tagline: 'SIERRA-BLU REALTY | BEYOND BROKERAGE',
     nav: ['Properties', 'Intelligence', 'Virtual Tour', 'Careers', 'Contact'],
     cta: 'Enter Portal',
@@ -68,8 +68,8 @@ const COPY = {
     viewAll: 'View All →',
     searchType: 'Property Type', searchCompound: 'Compound', searchBudget: 'Budget', searchBtn: 'Search',
     beds: 'bed', baths: 'bath',
-    secWhy: 'Why Sierra Blu',
-    h2Why: 'The Sierra Blu Standard',
+    secWhy: 'Why Sierra Estates',
+    h2Why: 'The Sierra Estates Standard',
     why: [
       { icon: '◆', title: 'Curated by Hand', desc: 'Each listing personally reviewed by senior advisors. No noise, no overpricing — only properties that meet our exacting standard.' },
       { icon: '◈', title: 'Grounded in Data', desc: 'AI-driven ROI modelling, live market comparisons, and growth corridor analysis. Conviction backed by evidence.' },
@@ -114,12 +114,12 @@ const COPY = {
     footNav: 'Navigation', footNavLinks: ['Properties', 'Intelligence', 'About Us', 'Careers', 'Contact'],
     footMarkets: 'Markets', footMarketLinks: ['New Cairo', 'Fifth Settlement', 'Madinaty', 'Mostakbal City', 'Mountain View'],
     footContact: 'Contact',
-    copyright: '© 2026 Sierra Blu Realty. All rights reserved.',
+    copyright: '© 2026 Sierra Estates. All rights reserved.',
     legal: ['Privacy Policy', 'Terms of Service', 'Cookies'],
   },
   ar: {
     dir: 'rtl' as const,
-    brand: 'سييرا بلو', sub: 'للعقارات',
+    brand: 'سييرا إستيتس', sub: 'للعقارات',
     tagline: 'استشارات عقارية مدعومة بالذكاء الاصطناعي',
     nav: ['العقارات', 'الذكاء', 'جولة افتراضية', 'الوظائف', 'اتصل'],
     cta: 'الدخول للبوابة',
@@ -137,8 +137,8 @@ const COPY = {
     viewAll: '← عرض الكل',
     searchType: 'نوع العقار', searchCompound: 'الكمباوند', searchBudget: 'الميزانية', searchBtn: 'بحث',
     beds: 'غرف', baths: 'حمامات',
-    secWhy: 'لماذا سييرا بلو',
-    h2Why: 'معيار سييرا بلو',
+    secWhy: 'لماذا سييرا إستيتس',
+    h2Why: 'معيار سييرا إستيتس',
     why: [
       { icon: '◆', title: 'اختيار بعناية', desc: 'كل قائمة يراجعها مستشارونا الكبار شخصياً. لا ضجيج، لا مبالغة — فقط عقارات تستوفي معاييرنا الصارمة.' },
       { icon: '◈', title: 'مبني على البيانات', desc: 'نمذجة عائد الاستثمار بالذكاء الاصطناعي، ومقارنات السوق الحية، وتحليل ممرات النمو. قرارات مبنية على الأدلة.' },
@@ -183,7 +183,7 @@ const COPY = {
     footNav: 'روابط التنقل', footNavLinks: ['العقارات', 'الذكاء', 'عنّا', 'الوظائف', 'اتصل'],
     footMarkets: 'الأسواق', footMarketLinks: ['القاهرة الجديدة', 'التجمع الخامس', 'مدينتي', 'مستقبل سيتي', 'ماونتن فيو'],
     footContact: 'تواصل معنا',
-    copyright: '© ٢٠٢٦ سييرا بلو للعقارات. جميع الحقوق محفوظة.',
+    copyright: '© ٢٠٢٦ سييرا إستيتس للعقارات. جميع الحقوق محفوظة.',
     legal: ['سياسة الخصوصية', 'شروط الخدمة', 'ملفات الارتباط'],
   },
 };
@@ -439,6 +439,30 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ══ VIRTUAL TOUR ══ */}
+      <section id="virtual-tour" style={{ background: th.bg, padding: '96px 0', borderTop: `1px solid ${th.border}`, borderBottom: `1px solid ${th.border}` }}>
+        <div style={sec}>
+          <div className="reveal text-center mb-10">
+            <span style={{ fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: G, fontFamily: "'Jost', sans-serif" }}>
+              {isAr ? 'الخطوة التالية' : 'What Comes Next'}
+            </span>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 300, lineHeight: 1.15, color: th.text, marginTop: 8 }}>
+              {isAr ? 'جولات افتراضية غامرة' : 'Immersive Virtual Tours'}
+            </h2>
+          </div>
+          <div className="reveal">
+            <LuxuryVirtualViewport />
+          </div>
+          <div className="reveal" style={{ marginTop: 32, textAlign: 'center' }}>
+            <Link href="/virtual-tour">
+              <button style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `linear-gradient(135deg,${G2},${G})`, color: '#071422', border: 'none', cursor: 'pointer', fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: isAr ? '.02em' : '.14em', textTransform: 'uppercase', padding: '14px 32px', borderRadius: 4, boxShadow: '0 4px 20px rgba(233,193,118,0.26)' }}>
+                {isAr ? 'ابدأ الجولات التفاعلية ثلاثية الأبعاد ←' : 'Launch Interactive 360° Tours →'}
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ══ LISTINGS ══ */}
       <section id="properties" ref={listingsSectionRef} style={{ background: mode === 'dark' ? '#0A1520' : th.bgAlt, padding: '80px 0' }}>
         <div style={sec}>
@@ -451,7 +475,7 @@ export default function LandingPage() {
           </div>
 
           {/* Listing cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {listings.map((p, i) => (
               <PropCard
                 key={p.id}
@@ -474,7 +498,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ══ WHY SIERRA BLU ══ */}
+      {/* ══ WHY SIERRA ESTATES ══ */}
       <section style={{ background: th.bg, padding: '96px 0', position: 'relative', overflow: 'hidden' }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ opacity: mode === 'dark' ? 0.025 : 0.02 }}>
           <ShieldLogo size={600} />
@@ -538,37 +562,84 @@ export default function LandingPage() {
             <div className="reveal h-[480px]" style={{ order: isAr ? 1 : 2 }}>
               <div className="relative h-full rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(233,193,118,0.22)', boxShadow: '0 32px 80px rgba(0,0,0,.4)' }}>
                 <LiveMap mode={mode} />
-                <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none" style={{ fontSize: 8, letterSpacing: '4px', color: 'rgba(233,193,118,0.35)', fontFamily: "'Jost', sans-serif", whiteSpace: 'nowrap' }}>SIERRA BLU INTELLIGENCE</div>
+                <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none" style={{ fontSize: 8, letterSpacing: '4px', color: 'rgba(233,193,118,0.35)', fontFamily: "'Jost', sans-serif", whiteSpace: 'nowrap' }}>SIERRA ESTATES INTELLIGENCE</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      
-      {/* ══ VIRTUAL TOUR ══ */}
-      <section id="virtual-tour" style={{ background: th.bg, padding: '96px 0', borderTop: `1px solid ${th.border}` }}>
+      {/* ══ AI FEATURES BENTO GRID ══ */}
+      <section style={{ background: th.bgAlt, padding: '96px 0', borderTop: `1px solid ${th.border}` }}>
         <div style={sec}>
-          <div className="reveal text-center mb-10">
+          <div className="reveal text-center mb-16">
             <span style={{ fontSize: 10, letterSpacing: '.24em', textTransform: 'uppercase', color: G, fontFamily: "'Jost', sans-serif" }}>
-              {isAr ? 'الخطوة التالية' : 'What Comes Next'}
+              {isAr ? 'الذكاء الاصطناعي الفائق' : 'Advanced Cognitive Suite'}
             </span>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 300, lineHeight: 1.15, color: th.text, marginTop: 8 }}>
-              {isAr ? 'جولات افتراضية غامرة' : 'Immersive Virtual Tours'}
+              {isAr ? 'منظومة الذكاء الاصطناعي العقاري' : 'Cognitive PropTech Suite'}
             </h2>
+            <p style={{ color: th.textMuted, fontSize: 14, fontWeight: 300, marginTop: 12, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+              {isAr ? 'حلول ذكية متكاملة لتسريع وتيرة الصفقات العقارية بدقة متناهية.' : 'High-precision neural tools engineered to automate and accelerate luxury real estate transactions.'}
+            </p>
           </div>
-          <div className="reveal">
-            <LuxuryVirtualViewport />
-          </div>
-          <div className="reveal" style={{ marginTop: 32, textAlign: 'center' }}>
-            <Link href="/virtual-tour">
-              <button style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `linear-gradient(135deg,${G2},${G})`, color: '#071422', border: 'none', cursor: 'pointer', fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: isAr ? '.02em' : '.14em', textTransform: 'uppercase', padding: '14px 32px', borderRadius: 4, boxShadow: '0 4px 20px rgba(233,193,118,0.26)' }}>
-                {isAr ? 'ابدأ الجولات التفاعلية ثلاثية الأبعاد ←' : 'Launch Interactive 360° Tours →'}
-              </button>
-            </Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+            {/* Box 1: Neural Matchmaker */}
+            <div className="group relative bg-[#091828]/40 border border-white/5 rounded-3xl p-8 hover:border-gold/30 hover:shadow-[0_12px_40px_rgba(200,169,110,0.08)] transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform font-bold">
+                <Sparkles size={20} />
+              </div>
+              <h3 className="text-white font-serif font-black text-xl mb-3">
+                {isAr ? 'المطابق العصبي' : 'Neural Matchmaker'}
+              </h3>
+              <p style={{ color: th.textSub, fontSize: 13, fontWeight: 300, lineHeight: 1.6, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                {isAr ? 'يربط المشترين المحتملين بالوحدات المناسبة بدقة دلالية تصل إلى 97٪.' : 'Matches prospective buyers to ideal luxury listings with 97% semantic precision.'}
+              </p>
+            </div>
+
+            {/* Box 2: Cognitive Closer */}
+            <div className="group relative bg-[#091828]/40 border border-white/5 rounded-3xl p-8 hover:border-gold/30 hover:shadow-[0_12px_40px_rgba(200,169,110,0.08)] transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                <Briefcase size={20} />
+              </div>
+              <h3 className="text-white font-serif font-black text-xl mb-3">
+                {isAr ? 'المغلق الإدراكي' : 'Cognitive Closer'}
+              </h3>
+              <p style={{ color: th.textSub, fontSize: 13, fontWeight: 300, lineHeight: 1.6, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                {isAr ? 'يؤتمت معالجة الاعتراضات والتفاوض على العقود باستخدام نماذج إدراكية متقدمة.' : 'Automates objection handling and contract negotiation using customized cognitive models.'}
+              </p>
+            </div>
+
+            {/* Box 3: 3D Tour Generator */}
+            <div className="group relative bg-[#091828]/40 border border-white/5 rounded-3xl p-8 hover:border-gold/30 hover:shadow-[0_12px_40px_rgba(200,169,110,0.08)] transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                <RotateCw size={20} />
+              </div>
+              <h3 className="text-white font-serif font-black text-xl mb-3">
+                {isAr ? 'منشئ جولات 3D' : '3D Tour Generator'}
+              </h3>
+              <p style={{ color: th.textSub, fontSize: 13, fontWeight: 300, lineHeight: 1.6, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                {isAr ? 'ينشئ جولات تفاعلية ثلاثية الأبعاد عالية الدقة مباشرة من الصور الخام.' : 'Instantly synthesizes high-fidelity 3D immersive walk-throughs from raw property photos.'}
+              </p>
+            </div>
+
+            {/* Box 4: ROI Predictor */}
+            <div className="group relative bg-[#091828]/40 border border-white/5 rounded-3xl p-8 hover:border-gold/30 hover:shadow-[0_12px_40px_rgba(200,169,110,0.08)] transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
+                <TrendingUp size={20} />
+              </div>
+              <h3 className="text-white font-serif font-black text-xl mb-3">
+                {isAr ? 'متنبئ العائد الاستثماري' : 'ROI Predictor'}
+              </h3>
+              <p style={{ color: th.textSub, fontSize: 13, fontWeight: 300, lineHeight: 1.6, fontFamily: isAr ? "'Cairo', sans-serif" : "'Jost', sans-serif" }}>
+                {isAr ? 'يتنبأ بعائدات المحفظة العقارية واتجاهات التقدير المالي في التجمع الخامس والقاهرة الجديدة.' : 'Forecasts portfolio yield and appreciation trends in Egypt\'s New Cairo and East Cairo corridors.'}
+              </p>
+            </div>
           </div>
         </div>
       </section>
+
 {/* ══ SIERRA AI ══ */}
       <section style={{ padding: '96px 0', background: mode === 'dark' ? 'linear-gradient(135deg, #0A1520 0%, #0D2035 50%, #122A47 100%)' : `linear-gradient(135deg, ${th.bgAlt} 0%, ${th.bg} 50%, ${th.bg2} 100%)`, borderTop: `1px solid ${th.border}`, borderBottom: `1px solid ${th.border}` }}>
         <div style={sec}>

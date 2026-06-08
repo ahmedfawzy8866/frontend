@@ -41,13 +41,13 @@ export default function AdminLoginPage() {
           
           {/* Logo */}
           <div className="flex flex-col items-center mb-12">
-            <div className="w-16 h-16 rounded-2xl bg-[#C9A84C]/10 border border-[#C9A84C]/20
-                            flex items-center justify-center mb-5">
-              <Shield className="text-[#C9A84C]" size={28} />
+            <div className="w-20 h-20 rounded-2xl bg-[#C9A84C]/10 border border-[#C9A84C]/20
+                            flex items-center justify-center mb-5 overflow-hidden">
+              <img src="/media__1776833126426.png" className="w-16 h-16 object-contain" alt="Sierra Estates Logo" />
             </div>
             <h1 className="text-white text-2xl font-bold tracking-tight uppercase mb-1"
               style={{ fontFamily: 'var(--font-display)' }}>
-              Sierra Blu
+              Sierra Estates
             </h1>
             <p className="text-white/30 text-[9px] tracking-widest uppercase font-mono">
               Admin Nexus · Secure Access
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                placeholder="admin@sierrablurealty.com"
+                placeholder="admin@sierraestates.com"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3
                            text-white text-sm placeholder:text-white/20
                            focus:outline-none focus:border-[#C9A84C]/50 focus:bg-white/8
@@ -116,8 +116,17 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
+          {/* Credentials Helper */}
+          <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-white/60">
+            <p className="font-bold text-[#C9A84C] mb-2">Authorized Access Credentials:</p>
+            <div className="space-y-1.5 font-mono text-[11px]">
+              <div>Email: <span className="text-white select-all">sierrablue8866@gmail.com</span></div>
+              <div>Password: <span className="text-white select-all">SierraEstates2026!</span></div>
+            </div>
+          </div>
+
           <p className="text-center text-white/20 text-[9px] tracking-widest uppercase mt-10 font-mono">
-            Sierra Blu Realty · Digital Concierge V13.0
+            Sierra Estates · Digital Concierge V13.0
           </p>
         </div>
       </div>

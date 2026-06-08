@@ -19,7 +19,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="loader-overlay">
-        <div className="loader-logo">SB</div>
+        <div className="loader-logo">SE</div>
         <div className="loader-text">Authenticating Admin…</div>
       </div>
     );

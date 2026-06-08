@@ -1,5 +1,6 @@
-import { adminDb } from './server/firebase-admin';
-import { Timestamp } from 'firebase-admin/firestore';
+import { db } from './firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import type { Timestamp } from 'firebase/firestore';
 
 export type AuditAction =
   | 'STAKEHOLDER_ONBOARD'
@@ -11,7 +12,6 @@ export type AuditAction =
   | 'SETTLEMENT_FINALIZED'
   | 'INTELLIGENCE_UPDATE';
 
-
 export interface AuditLog {
   action: AuditAction;
   performer: string;
@@ -19,14 +19,14 @@ export interface AuditLog {
   targetId: string;
   targetType: 'listing' | 'partner' | 'sale' | 'stakeholder' | 'system';
   details: string;
-  createdAt?: FirebaseFirestore.Timestamp;
+  createdAt?: Timestamp;
 }
 
 export const logAuditAction = async (log: Omit<AuditLog, 'createdAt'>) => {
   try {
-    await adminDb.collection('audit_logs').add({
+    await addDoc(collection(db, 'audit_logs'), {
       ...log,
-      createdAt: Timestamp.now()
+      createdAt: serverTimestamp()
     });
   } catch (err) {
     console.error("Critical: Audit logging failed:", err);

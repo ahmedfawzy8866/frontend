@@ -10,7 +10,7 @@ import { useI18n } from '../../lib/I18nContext';
 
 // Admin specific screens
 const AdminDashboard = dynamic(() => import('./AdminDashboard'), { ssr: false });
-const TeamCRM = dynamic(() => import('./TeamCRM'), { ssr: false });
+const CRMKanban = dynamic(() => import('../CRM/CRMKanban'), { ssr: false });
 const PortfolioAssets = dynamic(() => import('./PortfolioAssets'), { ssr: false });
 const IntegrationHub = dynamic(() => import('../Operations/IntegrationHub'), { ssr: false });
 const MarketIntelligence = dynamic(() => import('../Operations/MarketIntelligence'), { ssr: false });
@@ -98,7 +98,7 @@ export default function AdminPortal() {
               />
             )}
 
-            {activeScreen === 'team-crm' && <TeamCRM />}
+            {activeScreen === 'team-crm' && <CRMKanban />}
             {activeScreen === 'listings' && <PortfolioAssets />}
             {activeScreen === 'nexus' && <IntegrationHub />}
             {activeScreen === 'intelligence' && <MarketIntelligence />}
