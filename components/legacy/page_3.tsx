@@ -9,7 +9,7 @@ import {
   Sparkles, CheckCircle2, ChevronRight, UserCheck, ShieldAlert,
   ArrowRight, Globe, Moon, Sun, ArrowUpRight
 } from 'lucide-react';
-import BrandLogo from '@/components/UI/BrandLogo';
+import BrandLogo from '@/components/ui/BrandLogo';
 import { InventoryService, Property } from '@/lib/services/InventoryService';
 
 // Stylized Image Bridge component

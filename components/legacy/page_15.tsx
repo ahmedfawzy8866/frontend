@@ -4,7 +4,7 @@ import { auth } from '../../../lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useAuth } from '../../../lib/AuthContext';
 import { useRouter } from 'next/navigation';
-import BrandLogo from '../../../components/UI/BrandLogo';
+import BrandLogo from '../../../components/ui/BrandLogo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Mail, ChevronRight, ShieldCheck, Zap, Languages } from 'lucide-react';
 import { useI18n } from '../../../lib/I18nContext';

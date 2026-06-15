@@ -6,7 +6,7 @@ import ConciergeGallery from '@/components/Proposals/ConciergeGallery';
 import type { ConciergeSelection, ConciergeUnit } from '@/lib/services/portfolio-engine';
 import { trackPortfolioEngagement } from '@/lib/services/portfolio-engine';
 import { useSierraBlu } from '@/hooks/useSierraBlu';
-import { LuxuryCard, EditorialHeading } from '@/components/UI/LuxurySkeleton';
+import { LuxuryCard, EditorialHeading } from '@/components/ui/LuxurySkeleton';
 
 export default function ConciergePage({ params }: { params: Promise<{ leadId: string }> }) {
   const { leadId } = use(params);

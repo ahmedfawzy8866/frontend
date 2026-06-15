@@ -22,7 +22,7 @@ import {
   Sparkles, CheckCircle2, ChevronRight, UserCheck, ShieldAlert,
   ArrowRight, Globe, Moon, Sun, ArrowUpRight
 } from 'lucide-react';
-import BrandLogo from '@/components/UI/BrandLogo';
+import BrandLogo from '@/components/ui/BrandLogo';
 
 // ─── Compound geospatial coordinates (simulated map data) ──────────
 const COMPOUNDS = [

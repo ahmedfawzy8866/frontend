@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ChevronRight, ArrowUpRight, MapPin, Globe, Shield, User, Menu, X, Sparkles, Star, TrendingUp, Building2, Phone } from 'lucide-react';
-import BrandLogo from '../UI/BrandLogo';
+import BrandLogo from '../ui/BrandLogo';
 import { collection, query, limit, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { COLLECTIONS, Unit } from '../../lib/models/schema';

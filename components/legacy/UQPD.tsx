@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Share2, MapPin, TrendingUp, Info } from 'lucide-react';
 import type { ConciergeSelection, ConciergeUnit } from '@/lib/services/portfolio-engine';
-import { LuxuryCard, GoldButton, EditorialHeading } from '@/components/UI/LuxurySkeleton';
+import { LuxuryCard, GoldButton, EditorialHeading } from '@/components/ui/LuxurySkeleton';
 
 interface ConciergeGalleryProps {
   portfolio: ConciergeSelection;

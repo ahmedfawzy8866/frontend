@@ -4,9 +4,9 @@ import { useAuth } from '../lib/AuthContext';
 import { useI18n } from '../lib/I18nContext';
 import dynamic from 'next/dynamic';
 import LoginScreen from '../components/Auth/LoginScreen';
-import Topbar from '../components/UI/Topbar';
-import Sidebar from '../components/UI/Sidebar';
-import MobileNav from '../components/UI/MobileNav';
+import Topbar from '../components/ui/Topbar';
+import Sidebar from '../components/ui/Sidebar';
+import MobileNav from '../components/ui/MobileNav';
 
 const DashboardScreen    = dynamic(() => import('../components/Dashboard/DashboardScreen'),     { ssr: false });
 const PortfolioAssets    = dynamic(() => import('../components/Admin/PortfolioAssets'),         { ssr: false });

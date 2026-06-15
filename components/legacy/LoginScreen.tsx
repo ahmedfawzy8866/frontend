@@ -3,7 +3,7 @@ import React, { useState, FormEvent } from 'react';
 import { auth } from '../../lib/firebase';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useAuth } from '../../lib/AuthContext';
-import BrandLogo from '../UI/BrandLogo';
+import BrandLogo from '../ui/BrandLogo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ChevronRight, ShieldCheck, Globe, BarChart3, Diamond } from 'lucide-react';
 

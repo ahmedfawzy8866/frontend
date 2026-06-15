@@ -9,7 +9,7 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useSierraBlu } from '@/hooks/useSierraBlu';
-import { LuxuryCard, EditorialHeading, SectionBadge } from '@/components/UI/LuxurySkeleton';
+import { LuxuryCard, EditorialHeading, SectionBadge } from '@/components/ui/LuxurySkeleton';
 import { MapPin, TrendingUp, ArrowRight } from 'lucide-react';
 
 export default function InventoryShowcase() {

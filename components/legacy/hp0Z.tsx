@@ -4,9 +4,9 @@ import { useAuth } from '../lib/AuthContext';
 import dynamic from 'next/dynamic';
 import LoginScreen from '../components/Auth/LoginScreen';
 import LightLandingScreen from '../components/Landing/LightLandingScreen';
-import Topbar from '../components/UI/Topbar';
-import Sidebar from '../components/UI/Sidebar';
-import MobileNav from '../components/UI/MobileNav';
+import Topbar from '../components/ui/Topbar';
+import Sidebar from '../components/ui/Sidebar';
+import MobileNav from '../components/ui/MobileNav';
 
 // Dynamically import major screens and components to avoid SSR/build issues with browser-only APIs
 const DashboardScreen = dynamic(() => import('../components/Dashboard/DashboardScreen'), { ssr: false });

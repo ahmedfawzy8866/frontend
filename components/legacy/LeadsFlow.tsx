@@ -27,7 +27,7 @@ import {
   User
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import KPIProgressBar from '../UI/KPIProgressBar';
+import KPIProgressBar from '../ui/KPIProgressBar';
 
 export default function LeadsFlow() {
   const { user } = useAuth();
